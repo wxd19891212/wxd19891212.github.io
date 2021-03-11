@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>代码高亮 - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="对常用的语言增加了高亮处理，下面是一些高亮的代码Demo">
+<meta name="keywords" content="code,highlighted">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="代码高亮">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2016/03/15/29740/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="对常用的语言增加了高亮处理，下面是一些高亮的代码Demo">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-03-09T06:42:21.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码高亮">
+<meta name="twitter:description" content="对常用的语言增加了高亮处理，下面是一些高亮的代码Demo">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+        <meta property="og:image" content="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            代码高亮
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-03-15T00:00:00+08:00">
+	
+		    3月 15, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/Hexo/">Hexo</a>, <a class="category-link" href="/categories/Hexo/Demo/">Demo</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br><a id="more"></a><br><h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-text">C++</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript"><span class="toc-text">JavaScript</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java"><span class="toc-text">java</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#objectivec1"><span class="toc-text">objectivec1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#objectivec2"><span class="toc-text">objectivec2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swift-Demo"><span class="toc-text">swift Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML-CSS-JavaScript-Demo"><span class="toc-text">HTML CSS JavaScript Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python"><span class="toc-text">Python</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-1"><span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a></li></ol></p>
+<h1 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h1><figure class="highlight cpp"><figcaption><span>file.cpp</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * Block comment</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  <span class="comment">// line comment</span></div><div class="line"><span class="keyword">namespace</span> foo &#123;</div><div class="line"></div><div class="line">  <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Struct</span> &#123;</span></div><div class="line">    <span class="keyword">int</span> field;</div><div class="line">  &#125; Typedef;</div><div class="line">  <span class="keyword">enum</span> Enum &#123;Foo = <span class="number">1</span>, Bar = <span class="number">2</span>&#125;;</div><div class="line"></div><div class="line">  Typedef *globalVar;</div><div class="line">  <span class="keyword">extern</span> Typedef *externVar;</div><div class="line"></div><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">int</span> N&gt;</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Class</span> &#123;</span></div><div class="line">    T n;</div><div class="line">  <span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> paramName)</span> </span>&#123;</div><div class="line">      <span class="keyword">int</span> *localVar = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</div><div class="line">      <span class="keyword">this</span>-&gt;n = N;</div><div class="line"></div><div class="line">    label:</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"Formatted string %d\n\g"</span>, localVar[<span class="number">0</span>]);</div><div class="line">      <span class="built_in">printf</span>(<span class="string">R"**(Formatted raw-string %d\n)**"</span>, <span class="number">1</span>);</div><div class="line">      <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; (<span class="number">1</span> &lt;&lt; <span class="number">2</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="meta">#<span class="meta-keyword">define</span> FOO(A) A</span></div><div class="line">    <span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></div><div class="line">      <span class="built_in">printf</span>(<span class="string">"debug"</span>);</div><div class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><figure class="highlight css"><figcaption><span>file.css</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (-webkit-min-device-pixel-ratio: <span class="number">0</span>) &#123;</div><div class="line">  <span class="selector-tag">body</span><span class="selector-pseudo">:first-of-type</span> <span class="selector-tag">pre</span><span class="selector-pseudo">::after</span> &#123;</div><div class="line">    <span class="attribute">content</span>: <span class="string">'highlight: '</span> <span class="built_in">attr</span>(class);</div><div class="line">  &#125;</div><div class="line">  <span class="selector-tag">body</span> &#123;</div><div class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(45deg, blue, red);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> url(<span class="string">'print.css'</span>);</div><div class="line">@<span class="keyword">page</span><span class="selector-pseudo">:right</span> &#123;</div><div class="line"> <span class="attribute">margin</span>: <span class="number">1cm</span> <span class="number">2cm</span> <span class="number">1.3cm</span> <span class="number">4cm</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">font-face</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: Chunkfive; <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'Chunkfive.otf'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">div</span><span class="selector-class">.text</span>,</div><div class="line"><span class="selector-id">#content</span>,</div><div class="line"><span class="selector-tag">li</span><span class="selector-attr">[lang=ru]</span> &#123;</div><div class="line">  <span class="attribute">font</span>: Tahoma, Chunkfive, sans-serif;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">'hatch.png'</span>) <span class="comment">/* wtf? */</span>;  <span class="attribute">color</span>: <span class="number">#F0F0F0</span> <span class="meta">!important</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><figure class="highlight js"><figcaption><span>file.java</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> $initHighlight(<span class="params">block, flags</span>) </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">if</span> (block.className.search(<span class="regexp">/\bno\-highlight\b/</span>) != <span class="number">-1</span>)</div><div class="line">      <span class="keyword">return</span> processBlock(block.function, <span class="literal">true</span>, <span class="number">0x0F</span>) + <span class="string">' class=""'</span>;</div><div class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">    <span class="comment">/* handle exception */</span></div><div class="line">    <span class="keyword">var</span> e4x =</div><div class="line">        &lt;div&gt;Example</div><div class="line">            &lt;p&gt;<span class="number">1234</span>&lt;<span class="regexp">/p&gt;&lt;/</span>div&gt;;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> / <span class="number">2</span>; i &lt; classes.length; i++) &#123; <span class="comment">// "0 / 2" should not be parsed as regexp</span></div><div class="line">    <span class="keyword">if</span> (checkCondition(classes[i]) === <span class="literal">undefined</span>)</div><div class="line">      <span class="keyword">return</span> <span class="regexp">/\d+[\s/]/g</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">console</span>.log(<span class="built_in">Array</span>.every(classes, <span class="built_in">Boolean</span>));</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="java"><a href="#java" class="headerlink" title="java"></a>java</h1><figure class="highlight java"><figcaption><span>file.java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">SomeClass</span><span class="params">(AnInterface param, <span class="keyword">int</span>[] reassignedParam)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> localVar = <span class="string">"IntelliJ"</span>; <span class="comment">// Error, incompatible types</span></div><div class="line">    System.out.println(anotherString + toString() + localVar);</div><div class="line">    <span class="keyword">long</span> time = Date.parse(<span class="string">"1.2.3"</span>); <span class="comment">// Method is deprecated</span></div><div class="line">    <span class="keyword">int</span> reassignedValue = <span class="keyword">this</span>.staticField;</div><div class="line">    reassignedValue ++;</div><div class="line">    field.run();</div><div class="line">    <span class="keyword">new</span> SomeClass() &#123;</div><div class="line">      &#123;</div><div class="line">        <span class="keyword">int</span> a = localVar;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">    reassignedParam = <span class="keyword">new</span> ArrayList&lt;String&gt;().toArray(<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>]);</div><div class="line">  &#125;</div><div class="line"><span class="keyword">enum</span> AnEnum &#123; CONST1, CONST2 &#125;</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">AnInterface</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> CONSTANT = <span class="number">2</span>;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeAbstractClass</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="objectivec1"><a href="#objectivec1" class="headerlink" title="objectivec1"></a>objectivec1</h1><figure class="highlight objectivec"><figcaption><span>file.objc</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Dependency.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">WorldDataSource</span></span></div><div class="line"><span class="keyword">@optional</span></div><div class="line">- (<span class="built_in">NSString</span>*)worldName;</div><div class="line"><span class="keyword">@required</span></div><div class="line">- (<span class="built_in">BOOL</span>)allowsToLive;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Test</span> : <span class="title">NSObject</span> &lt;<span class="title">HelloDelegate</span>, <span class="title">WorldDataSource</span>&gt; </span>&#123;</div><div class="line">  <span class="built_in">NSString</span> *_greeting;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *greeting;</div><div class="line">- (<span class="keyword">IBAction</span>) show;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Test</span></span></div><div class="line"></div><div class="line"><span class="keyword">@synthesize</span> test=_test;</div><div class="line"></div><div class="line">+ (<span class="keyword">id</span>) test &#123;</div><div class="line">  <span class="keyword">return</span> [<span class="keyword">self</span> testWithGreeting:<span class="string">@"Hello, world!\nFoo bar!"</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="keyword">id</span>) testWithGreeting:(<span class="built_in">NSString</span>*)greeting &#123;</div><div class="line">  <span class="keyword">return</span> [[[<span class="keyword">self</span> alloc] initWithGreeting:greeting] autorelease];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>) initWithGreeting:(<span class="built_in">NSString</span>*)greeting &#123;</div><div class="line">  <span class="keyword">if</span> ( (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) ) &#123;</div><div class="line">    _greeting = [greeting <span class="keyword">retain</span>];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) dealloc &#123;</div><div class="line">  [_greeting release];</div><div class="line">  [<span class="keyword">super</span> dealloc];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><figcaption><span>objc.m</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SongPlayer</span> : <span class="title">NSObject</span> </span></div><div class="line">- (<span class="keyword">void</span>)playSong:(Song *)song; </div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SongPlayer</span> </span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)playSong:(Song *)song &#123; </div><div class="line">    <span class="built_in">NSError</span> *error; </div><div class="line">    [<span class="keyword">self</span> startAudio:&amp;error]; </div><div class="line">    <span class="comment">//... </span></div><div class="line">&#125; </div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)startAudio:(<span class="built_in">NSError</span> **)error &#123; </div><div class="line">    <span class="comment">//... </span></div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h1 id="objectivec2"><a href="#objectivec2" class="headerlink" title="objectivec2"></a>objectivec2</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"UIButton+Block.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;objc/runtime.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">id</span> key;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIButton</span> (<span class="title">Block</span>)</span></div><div class="line"></div><div class="line">- ( <span class="keyword">void</span> )initWithBlock:( ClickActionBlock )clickBlock <span class="keyword">for</span>:( <span class="built_in">UIControlEvents</span> )event&#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">    objc_setAssociatedObject ( <span class="keyword">self</span> , &amp; key , clickBlock, OBJC_ASSOCIATION_COPY_NONATOMIC );</div><div class="line">    </div><div class="line">    [ <span class="keyword">self</span> addTarget : <span class="keyword">self</span> action : <span class="keyword">@selector</span> (goAction:) forControlEvents :event];</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- ( <span class="keyword">void</span> )goAction:( <span class="built_in">UIButton</span> *)sender&#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    ClickActionBlock block = ( ClickActionBlock ) objc_getAssociatedObject ( <span class="keyword">self</span> , &amp; key );</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (block) &#123;</div><div class="line">        </div><div class="line">        block(sender);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h1 id="swift-Demo"><a href="#swift-Demo" class="headerlink" title="swift Demo"></a>swift Demo</h1><figure class="highlight swift"><figcaption><span>file.swift</span><a href="http://underscorejs.org/#compact" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">MyClass</span> : <span class="title">Interface</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">unarchiveFromFile</span>&lt;<span class="title">A</span>&gt;(<span class="title">file</span> : <span class="title">A</span>, (<span class="title">Int</span>,<span class="title">Int</span>) -&gt; <span class="title">B</span>) -&gt; <span class="title">SKNode</span>? </span>&#123;</div><div class="line">        <span class="keyword">let</span> path: <span class="type">String</span> = bundle.pathForResource(file, ofType: <span class="string">"file\(name + 5).txt"</span>)</div><div class="line">        <span class="keyword">let</span> funnyNumber = <span class="number">3</span> + <span class="number">0xC2.15p2</span> * (<span class="number">1_000_000.000_000_1</span> - <span class="number">000123.456</span>) + <span class="number">0o21</span></div><div class="line">        <span class="keyword">var</span> sceneData = <span class="type">NSData</span>.dataWithContentsOfFile(path, options: .<span class="type">DataReadingMappedIfSafe</span>, error: <span class="literal">nil</span>)</div><div class="line">        <span class="comment">/* a comment <span class="comment">/* with a nested comment */</span> and the end */</span></div><div class="line">    &#125;</div><div class="line">    <span class="meta">@objc</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">shouldAutorotate</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="HTML-CSS-JavaScript-Demo"><a href="#HTML-CSS-JavaScript-Demo" class="headerlink" title="HTML CSS JavaScript Demo"></a>HTML CSS JavaScript Demo</h1><figure class="codeblock codeblock--tabbed"><figcaption><a href="http://example.com" target="_blank" rel="external">example</a><ul class="tabs"><li class="tab active">js</li><li class="tab">css</li><li class="tab">html</li></ul></figcaption><div class="tabs-content"><figure class="highlight js" style="display: block;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">$initHighlight</span>(<span class="params">block, flags</span>) </span>{</span><br><span class="line">  <span class="keyword">try</span> {</span><br><span class="line">    <span class="keyword">if</span> (block.className.search(<span class="regexp">/\bno\-highlight\b/</span>) != <span class="number">-1</span>)</span><br><span class="line">      <span class="keyword">return</span> processBlock(block.function, <span class="literal">true</span>, <span class="number">0x0F</span>) + <span class="string">' class=""'</span>;</span><br><span class="line">  } <span class="keyword">catch</span> (e) {</span><br><span class="line">    <span class="comment">/* handle exception */</span></span><br><span class="line">    <span class="keyword">var</span> e4x =</span><br><span class="line">        &lt;div&gt;Example</span><br><span class="line">            &lt;p&gt;1234&lt;/p&gt;&lt;/div&gt;;</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> / <span class="number">2</span>; i &lt; classes.length; i++) { <span class="comment">// "0 / 2" should not be parsed as regexp</span></span><br><span class="line">    <span class="keyword">if</span> (checkCondition(classes[i]) === <span class="literal">undefined</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="regexp">/\d+[\s/]/g</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">Array</span>.every(classes, <span class="built_in">Boolean</span>));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><figure class="highlight css" style="display: none;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (-webkit-min-device-pixel-ratio: <span class="number">0</span>) {</span><br><span class="line">  <span class="selector-tag">body</span><span class="selector-pseudo">:first-of-type</span> <span class="selector-tag">pre</span><span class="selector-pseudo">::after</span> {</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">'highlight: '</span> <span class="built_in">attr</span>(class);</span><br><span class="line">  }</span><br><span class="line">  <span class="selector-tag">body</span> {</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(45deg, blue, red);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@<span class="keyword">import</span> url(<span class="string">'print.css'</span>);</span><br><span class="line">@<span class="keyword">page</span><span class="selector-pseudo">:right</span> {</span><br><span class="line"> <span class="attribute">margin</span>: <span class="number">1cm</span> <span class="number">2cm</span> <span class="number">1.3cm</span> <span class="number">4cm</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@<span class="keyword">font-face</span> {</span><br><span class="line">  <span class="attribute">font-family</span>: Chunkfive; <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'Chunkfive.otf'</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.text</span>,</span><br><span class="line"><span class="selector-id">#content</span>,</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-attr">[lang=ru]</span> {</span><br><span class="line">  <span class="attribute">font</span>: Tahoma, Chunkfive, sans-serif;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">'hatch.png'</span>) <span class="comment">/* wtf? */</span>;  <span class="attribute">color</span>: <span class="number">#F0F0F0</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><figure class="highlight html" style="display: none;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">response</span> <span class="attr">value</span>=<span class="string">"ok"</span> <span class="attr">xml:lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>Ok<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">comment</span> <span class="attr">html_allowed</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ns1:description</span>&gt;</span>&lt;![CDATA[</span><br><span class="line">  CDATA is &lt;not&gt; magical.</span><br><span class="line">  ]]&gt;<span class="tag">&lt;/<span class="name">ns1:description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">response</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"><span class="selector-tag">body</span> {<span class="attribute">width</span>: <span class="number">500px</span>;}</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"application/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">$init</span>(<span class="params"></span>) </span>{<span class="keyword">return</span> <span class="literal">true</span>;}</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">checked</span> <span class="attr">class</span>=<span class="string">"title"</span> <span class="attr">id</span>=<span class="string">'title'</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- here goes the rest of the page --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure></div></figure>
+<h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><figure class="highlight python"><figcaption><span>archives.py</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@requires_authorization</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">somefunc</span><span class="params">(param1=<span class="string">''</span>, param2=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="string">r'''A docstring'''</span></div><div class="line">    <span class="keyword">if</span> param1 &gt; param2: <span class="comment"># interesting</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'Gre\'ater'</span></div><div class="line">    <span class="keyword">return</span> (param2 - param1 + <span class="number">1</span> + <span class="number">0b10l</span>) <span class="keyword">or</span> <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">'''interpreter</span></div><div class="line"><span class="string"><span class="meta">... </span>prompt'''</span></div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="CSS-1"><a href="#CSS-1" class="headerlink" title="CSS"></a>CSS</h1><figure class="highlight css"><figcaption><span>archives.css</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (-webkit-min-device-pixel-ratio: <span class="number">0</span>) &#123;</div><div class="line">  <span class="selector-tag">body</span><span class="selector-pseudo">:first-of-type</span> <span class="selector-tag">pre</span><span class="selector-pseudo">::after</span> &#123;</div><div class="line">    <span class="attribute">content</span>: <span class="string">'highlight: '</span> <span class="built_in">attr</span>(class);</div><div class="line">  &#125;</div><div class="line">  <span class="selector-tag">body</span> &#123;</div><div class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(45deg, blue, red);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> url(<span class="string">'print.css'</span>);</div><div class="line">@<span class="keyword">page</span><span class="selector-pseudo">:right</span> &#123;</div><div class="line"> <span class="attribute">margin</span>: <span class="number">1cm</span> <span class="number">2cm</span> <span class="number">1.3cm</span> <span class="number">4cm</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">font-face</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: Chunkfive; <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'Chunkfive.otf'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">div</span><span class="selector-class">.text</span>,</div><div class="line"><span class="selector-id">#content</span>,</div><div class="line"><span class="selector-tag">li</span><span class="selector-attr">[lang=ru]</span> &#123;</div><div class="line">  <span class="attribute">font</span>: Tahoma, Chunkfive, sans-serif;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">'hatch.png'</span>) <span class="comment">/* wtf? */</span>;  <span class="attribute">color</span>: <span class="number">#F0F0F0</span> <span class="meta">!important</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><figure class="highlight http"><figcaption><span>archives.http</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">html：text/html</span></div><div class="line"><span class="attribute">Ascii</span>: text/plain</div><div class="line"><span class="attribute">Json:text/json</span></div><div class="line"><span class="attribute">Jpg:image/jpeg</span></div><div class="line"><span class="attribute">Gif:image/gif</span></div><div class="line"><span class="attribute">Ppt</span>: application/vnd.ms-powerpoint</div><div class="line"><span class="attribute">Quicktime:video/quicktime</span></div><div class="line"><span class="attribute">Content-Length</span>: 1024</div><div class="line"><span class="attribute">Content-Type</span>: text/plain</div><div class="line"><span class="keyword">GET</span> <span class="string">/</span> index.htm <span class="string">HTTP/1.1</span></div><div class="line"><span class="string">Host:</span> hackr.jp</div></pre></td></tr></table></figure>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><figure class="highlight json"><figcaption><span>archives.json</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block" target="_blank" rel="external">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  &#123;</div><div class="line">    <span class="attr">"title"</span>: <span class="string">"apples"</span>,</div><div class="line">    <span class="attr">"count"</span>: [<span class="number">12000</span>, <span class="number">20000</span>],</div><div class="line">    <span class="attr">"description"</span>: &#123;<span class="attr">"text"</span>: <span class="string">"..."</span>, <span class="attr">"sensitive"</span>: <span class="literal">false</span>&#125;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    <span class="attr">"title"</span>: <span class="string">"oranges"</span>,</div><div class="line">    <span class="attr">"count"</span>: [<span class="number">17500</span>, <span class="literal">null</span>],</div><div class="line">    <span class="attr">"description"</span>: &#123;<span class="attr">"text"</span>: <span class="string">"..."</span>, <span class="attr">"sensitive"</span>: <span class="literal">false</span>&#125;</div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<!--# INI
+<figure class="highlight ini"><figcaption><span>archives.ini</span><a href="https://hexo.io/docs/tag-plugins.html#Code-Block">Code Block</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;Settings relating to the location and loading of the database</span></div><div class="line"><span class="section">[Database]</span></div><div class="line"><span class="attr">ProfileDir</span>=.</div><div class="line"><span class="attr">ShowProfileMgr</span>=smart</div><div class="line"><span class="attr">Profile1_Name[]</span> = <span class="string">"\|/_-=MegaDestoyer=-_\|/"</span></div><div class="line"><span class="attr">DefaultProfile</span>=<span class="literal">True</span></div><div class="line"><span class="attr">AutoCreate</span> = <span class="literal">no</span></div><div class="line"></div><div class="line"><span class="section">[AutoExec]</span></div><div class="line"><span class="attr">use-prompt</span>=<span class="string">"prompt"</span></div><div class="line"><span class="attr">Glob</span>=autoexec_*.ini</div><div class="line"><span class="attr">AskAboutIgnoredPlugins</span>=<span class="number">0</span></div></pre></td></tr></table></figure>–&gt;
+<p><a href="#HTML-CSS-JavaScript-Demo">测试跳转</a></p>
+-->
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/code/">code</a> <a class="tag tag--primary tag--small t-link" href="/tags/highlighted/">highlighted</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/15/25939/" data-tooltip="云南旅游" aria-label="上一篇: 云南旅游">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/02/12068/" data-tooltip="MarkDown基本用法和标签插件示例" aria-label="下一篇: MarkDown基本用法和标签插件示例">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/15/29740/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/15/29740/&amp;title=代码高亮" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/15/29740/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/15/25939/" data-tooltip="云南旅游" aria-label="上一篇: 云南旅游">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/02/12068/" data-tooltip="MarkDown基本用法和标签插件示例" aria-label="下一篇: MarkDown基本用法和标签插件示例">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/15/29740/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/15/29740/&amp;title=代码高亮" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/15/29740/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/15/29740/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/15/29740/&amp;title=代码高亮">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/15/29740/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2016/03/15/29740/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

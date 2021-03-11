@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>iOS中block的用法和理解 - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="block是一个OC对象, 它的功能是保存代码片段, 预先准备好代码, 并在需要的时候执行.">
+<meta name="keywords" content="传值回调">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS中block的用法和理解">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2017/01/25/30423/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="block是一个OC对象, 它的功能是保存代码片段, 预先准备好代码, 并在需要的时候执行.">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-05-10T03:08:07.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS中block的用法和理解">
+<meta name="twitter:description" content="block是一个OC对象, 它的功能是保存代码片段, 预先准备好代码, 并在需要的时候执行.">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS中block的用法和理解
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-01-25T23:14:32+08:00">
+	
+		    1月 25, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/Block/">Block</a>, <a class="category-link" href="/categories/Block/iOS/">iOS</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>block是一个OC对象, 它的功能是保存代码片段, 预先准备好代码, 并在需要的时候执行.<br><a id="more"></a><br><h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Block语法"><span class="toc-text">Block语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block类型变量"><span class="toc-text">Block类型变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#block说明符号"><span class="toc-text">__block说明符号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block实现原理"><span class="toc-text">Block实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Block结构"><span class="toc-text">Block结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block的存储域"><span class="toc-text">Block的存储域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block复制"><span class="toc-text">Block复制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用-block发生了什么"><span class="toc-text">使用__block发生了什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block的执行函数"><span class="toc-text">Block的执行函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block的循环引用"><span class="toc-text">Block的循环引用</span></a></li></ol></p>
+<h1 id="Block语法"><a href="#Block语法" class="headerlink" title="Block语法"></a>Block语法</h1><p>Block表达式语法：<br>^ 返回值类型 (参数列表) {表达式}</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">^ <span class="keyword">int</span> (<span class="keyword">int</span> a) &#123;</div><div class="line">      <span class="keyword">return</span> a + <span class="number">1</span>;</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">^&#123;</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"最简模式Block"</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="Block类型变量"><a href="#Block类型变量" class="headerlink" title="Block类型变量"></a>Block类型变量</h1><p>声明Block类型变量语法：<br>返回值类型 (^变量名)(参数列表) = Block表达式</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> (^myBlock)(<span class="keyword">int</span>,<span class="keyword">int</span>) = ^ <span class="keyword">int</span> (<span class="keyword">int</span> a,<span class="keyword">int</span> b) &#123;</div><div class="line">        <span class="keyword">return</span> a+b;</div><div class="line">    &#125;;</div><div class="line"><span class="keyword">int</span> c = myBlock(<span class="number">2</span>,<span class="number">3</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"c=%d"</span>,c);</div></pre></td></tr></table></figure>
+<p>当Block类型变量作为函数的参数时，写作：<br>返回值类型 (^)(参数列表) block变量名<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> testParmWithBlock:^<span class="keyword">int</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</div><div class="line">        <span class="keyword">return</span> a+b;</div><div class="line">&#125;];</div><div class="line">- (<span class="keyword">void</span>)testParmWithBlock:(<span class="keyword">int</span>(^)(<span class="keyword">int</span> a,<span class="keyword">int</span> b))block &#123;</div><div class="line">    block(<span class="number">2</span>,<span class="number">3</span>);</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[block <span class="keyword">class</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>借助typedef可简写：<br>typedef &lt;#returnType#&gt;(^&lt;#name#&gt;)(&lt;#arguments#&gt;);<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>(^TypedefBlock)(<span class="keyword">int</span>,<span class="keyword">int</span>);</div><div class="line">[<span class="keyword">self</span> testParmWithTypedefBlock:^<span class="keyword">int</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</div><div class="line">        <span class="keyword">return</span> a+b;</div><div class="line">&#125;];</div><div class="line">- (<span class="keyword">void</span>)testParmWithTypedefBlock: (TypedefBlock)myTypedefBlock&#123;</div><div class="line">    myTypedefBlock(<span class="number">2</span>,<span class="number">3</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>截获自动变量值<br>Block表达式可截获所使用的自动变量的值。<br>截获：保存自动变量的瞬间值。<br>因为是“瞬间值”，所以声明Block之后，即便在Block外修改自动变量的值，也不会对Block内截获的自动变量值产生影响。<br>例如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i=<span class="number">10</span>;</div><div class="line"><span class="keyword">void</span>(^myAutomaticVariable)(<span class="keyword">void</span>) = ^&#123;</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"In block, i = %d"</span>, i);</div><div class="line">&#125;;</div><div class="line">i = <span class="number">20</span>;<span class="comment">//Block外修改变量i，也不影响Block内的自动变量</span></div><div class="line">myAutomaticVariable();<span class="comment">//i修改为20后才执行，打印: In block, i = 10</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"i = %d"</span>, i);<span class="comment">//打印：i = 20</span></div></pre></td></tr></table></figure>
+<h1 id="block说明符号"><a href="#block说明符号" class="headerlink" title="__block说明符号"></a>__block说明符号</h1><p>自动变量截获的值为Block声明时刻的瞬间值，保存后就不能改写该值，如需对自动变量进行重新赋值，需要在变量声明前附加<code>__block</code>说明符，这时该变量称为<code>__block</code>变量。</p>
+<p>自动变量值为一个对象情况<br>当自动变量为一个类的对象，且没有使用<code>__block</code>修饰时，虽然不可以在Block内对该变量进行重新赋值，但可以修改该对象的属性。<br>如果该对象是个Mutable的对象，例如NSMutableArray，则还可以在Block内对NSMutableArray进行元素的增删：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableArray</span> *varMuArr = [@[<span class="string">@"1"</span>,<span class="string">@"2"</span>] mutableCopy];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"varMuArr Count:%ld"</span>, varMuArr.count);<span class="comment">//打印varMuArr Count:2</span></div><div class="line"><span class="keyword">void</span> (^muArrBlock)(<span class="built_in">NSString</span> *) = ^(<span class="built_in">NSString</span> *str) &#123;</div><div class="line">   [varMuArr addObject:str]; <span class="comment">//可以修改属性</span></div><div class="line">   <span class="comment">//varMuArr = [@[@"5"] mutableCopy]; 不能赋值 Variable is not assignable (missing __block type specifier)</span></div><div class="line">&#125;;</div><div class="line">muArrBlock(<span class="string">@"3"</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"varMuArr Count:%ld"</span>, varMuArr.count);<span class="comment">//打印varMuArr Count:3</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[muArrBlock <span class="keyword">class</span>]);<span class="comment">//打印：__NSMallocBlock__</span></div></pre></td></tr></table></figure>
+<h1 id="Block实现原理"><a href="#Block实现原理" class="headerlink" title="Block实现原理"></a>Block实现原理</h1><p>使用Clang<br>Block实际上是作为极普通的C语言源码来处理的：含有Block语法的源码首先被转换成C语言编译器能处理的源码，再作为普通的C源代码进行编译。<br>使用LLVM编译器的clang命令可将含有Block的Objective-C代码转换成C++的源代码，以探查其具体实现方式：<br><code>clang -rewrite-objc 源码文件名</code></p>
+<h2 id="Block结构"><a href="#Block结构" class="headerlink" title="Block结构"></a>Block结构</h2><p>使用Block的时候，编译器对Block语法进行了怎样的转换？<br>如上所示的最简单的Block使用代码，经clang转换后，可得到以下几个部分（有代码删减和注释添加）：<br><code>__ViewController__viewDidLoad_block_impl_6</code>即为viewDidLoad()函数栈上的Block结构体<br>将上面的代码段clang，发现Block的结构体<code>__ViewController__viewDidLoad_block_impl_6</code>结构如下所示：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> __ViewController__viewDidLoad_block_impl_6 &#123;</div><div class="line"><span class="keyword">struct</span> __block_impl impl;</div><div class="line"><span class="keyword">struct</span> __ViewController__viewDidLoad_block_desc_6* Desc;</div><div class="line"><span class="built_in">NSMutableArray</span> *varMuArr;</div><div class="line">__ViewController__viewDidLoad_block_impl_6(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __ViewController__viewDidLoad_block_desc_6 *desc, <span class="built_in">NSMutableArray</span> *_varMuArr, <span class="keyword">int</span> flags=<span class="number">0</span>) : varMuArr(_varMuArr) &#123;</div><div class="line">impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">impl.Flags = flags;</div><div class="line">impl.FuncPtr = fp;</div><div class="line">Desc = desc;</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Block有三种类（即<code>__block_impl</code>的isa指针指向的值，isa说明参考《Objective-C isa 指针 与 runtime 机制》），根据Block对象创建时所处数据区不同而进行区别：</p>
+<p><code>_NSConcreteStackBlock</code>：在栈上创建的Block对象<br><code>_NSConcreteMallocBlock</code>：在堆上创建的Block对象   出了作用域后引用会复制到堆区<br><code>_NSConcreteGlobalBlock</code>：全局数据区的Block对象    不引用外部变量<br>观察上节代码中<code>__ViewController__viewDidLoad_block_impl_6</code>结构体（viewDidLoad栈上Block的结构体）的构造函数可以看到，栈上的变量_varMuArr以参数的形式传入到了这个构造函数中，此处即为变量的自动截获。变量被保存在Block的结构体实例中。</p>
+<p>所以在muArrBlock()执行之前，栈上简单数据类型的_varMuArr无论发生什么变化，都不会影响到Block以参数形式传入而捕获的值。但这个变量是指向对象的指针时，是可以修改这个对象的属性的，只是不能为变量重新赋值。</p>
+<h1 id="Block的存储域"><a href="#Block的存储域" class="headerlink" title="Block的存储域"></a>Block的存储域</h1><p>上文已提到，根据Block创建的位置不同，Block有三种类型，创建的Block对象分别会存储到栈、堆、全局数据区域。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> (^globalBlock)(<span class="keyword">void</span>) = ^&#123;</div><div class="line"> <span class="built_in">NSLog</span>(<span class="string">@"Global Block"</span>);</div><div class="line">&#125;;</div><div class="line">globalBlock();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[globalBlock <span class="keyword">class</span>]);<span class="comment">//打印：__NSGlobalBlock__</span></div></pre></td></tr></table></figure>
+<p>像上面代码块中的全局globalBlock自然是存储在全局数据区，但注意在函数栈上创建的blk，如果没有截获自动变量，Block的结构实例还是会被设置在程序的全局数据区，而非栈上：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> s = <span class="number">1</span>;</div><div class="line"><span class="keyword">void</span> (^stackBlock)(<span class="keyword">void</span>) = ^&#123;</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"s=%d"</span>,s);</div><div class="line">&#125;;</div><div class="line">stackBlock();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[stackBlock <span class="keyword">class</span>]);<span class="comment">//打印：__NSMallocBlock__</span></div></pre></td></tr></table></figure>
+<p>可以看到截获了自动变量的Block打印的类是<code>__NSGlobalBlock__</code>，表示存储在全局数据区。<br>但为什么捕获自动变量的Block打印的类却是设置在堆上的<code>__NSMallocBlock__</code>，而非栈上的<code>__NSStackBlock__</code>?这个问题稍后解释。</p>
+<h1 id="Block复制"><a href="#Block复制" class="headerlink" title="Block复制"></a>Block复制</h1><p>配置在栈上的Block，如果其所属的栈作用域结束，该Block就会被废弃，对于超出Block作用域仍需使用Block的情况，Block提供了将Block从栈上复制到堆上的方法来解决这种问题，即便Block栈作用域已结束，但被拷贝到堆上的Block还可以继续存在。<br>复制到堆上的Block，将<code>_NSConcreteMallocBlock</code>类对象写入Block结构体实例的成员变量isa：<br><code>impl.isa = &amp;_NSConcreteMallocBlock;</code></p>
+<p>在ARC有效时，大多数情况下编译器会进行判断，自动生成将Block从栈上复制到堆上的代码(或者直接在堆上创建Block对象)，以下几种情况栈上的Block会自动复制到堆上：</p>
+<p>调用Block的copy方法<br>将Block作为函数返回值时（MRC时此条无效，需手动调用copy）  这个有问题<br>将Block赋值给<code>__strong</code>修改的变量时（MRC时此条无效）<br>向Cocoa框架含有usingBlock的方法或者GCD的API传递Block参数时</p>
+<p>其它时候向方法的参数中传递Block时，需要手动调用copy方法复制Block。<br>上一节的栈上截获了自动变量i的Block之所以在栈上创建，却是<code>_NSMallocBlock__</code>类，就是因为这个Block对象赋值给了<code>__strong</code>修饰的变量**captureBlk（_strong是ARC下对象的默认修饰符）。<br>因为上面四条规则，在ARC下其实很少见到<code>_NSConcreteStackBlock</code>类的Block，大多数情况编译器都保证了Block是在堆上创建的，如下代码所示，仅最后一行代码直接使用一个不赋值给变量的Block，它的类才是<code>__NSStackBlock__</code>：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>(^TypedefBlock)(<span class="keyword">int</span>,<span class="keyword">int</span>);</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NSString</span> *(^TypedefStringBlock)(<span class="built_in">NSString</span> *,<span class="built_in">NSString</span> *);</div><div class="line"></div><div class="line"><span class="keyword">int</span> m=<span class="number">3</span>;</div><div class="line"><span class="keyword">int</span> n=<span class="number">4</span>;</div><div class="line">TypedefBlock rblock = [<span class="keyword">self</span> testReturnBlock];</div><div class="line"><span class="keyword">int</span> rVar = rblock(m,n);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[rblock <span class="keyword">class</span>]);<span class="comment">//打印：__NSGlobalBlock__</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"rVar=%d"</span>,rVar);</div><div class="line">    </div><div class="line">TypedefStringBlock strBlock = [<span class="keyword">self</span> testReturnStrBlock];</div><div class="line"><span class="built_in">NSString</span> *strVar = strBlock(<span class="string">@"String"</span>,<span class="string">@"Block"</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[strBlock <span class="keyword">class</span>]);<span class="comment">//打印：__NSGlobalBlock__</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"str=%@"</span>,strVar);</div><div class="line">    </div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Stack Block:%@"</span>, [^&#123;<span class="built_in">NSLog</span>(<span class="string">@"Stack Block:%d"</span>,count);&#125; <span class="keyword">class</span>]);</div><div class="line"></div><div class="line">- (TypedefBlock)testReturnBlock &#123;</div><div class="line">    <span class="keyword">int</span> (^returnBlock)(<span class="keyword">int</span>,<span class="keyword">int</span>) = ^(<span class="keyword">int</span> a,<span class="keyword">int</span> b)&#123;</div><div class="line">        <span class="keyword">return</span> a+b;</div><div class="line">    &#125;;</div><div class="line">    <span class="comment">//globalBlock();</span></div><div class="line">    <span class="keyword">return</span> returnBlock;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (TypedefStringBlock)testReturnStrBlock &#123;</div><div class="line">    <span class="built_in">NSString</span> * (^returnBlock)(<span class="built_in">NSString</span> *,<span class="built_in">NSString</span> *) = ^(<span class="built_in">NSString</span> * a,<span class="built_in">NSString</span> * b)&#123;</div><div class="line">        <span class="keyword">return</span> [a stringByAppendingString:b];</div><div class="line">    &#125;;</div><div class="line">    <span class="comment">//globalBlock();</span></div><div class="line">    <span class="keyword">return</span> returnBlock;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="使用-block发生了什么"><a href="#使用-block发生了什么" class="headerlink" title="使用__block发生了什么"></a>使用__block发生了什么</h1><p>Block捕获的自动变量添加<code>__block</code>说明符，就可在Block内读和写该变量，也可以在原来的栈上读写该变量。<br>自动变量的截获保证了栈上的自动变量被销毁后，Block内仍可使用该变量。<br><code>__block</code>保证了栈上和Block内（通常在堆上）可以访问和修改“同一个变量”，<code>__block</code>是如何实现这一功能的？<br><code>__block</code>发挥作用的原理：将栈上用<code>__block</code>修饰的自动变量封装成一个结构体，让其在堆上创建，以方便从栈上或堆上访问和修改同一份数据。</p>
+<p>现在对刚才的代码段，加上<code>__block</code>说明符，并在block内外读写变量ivar。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">__block <span class="keyword">int</span> ivar=<span class="number">10</span>;</div><div class="line"><span class="keyword">void</span>(^myChangeBlockVar)(<span class="keyword">void</span>) = ^&#123;</div><div class="line">   ivar = <span class="number">20</span>;</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"In block, ivar = %d"</span>, ivar);<span class="comment">//打印：In block, ivar = 20</span></div><div class="line">&#125;;</div><div class="line">ivar++;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Out Block: ivar = %d"</span>, ivar);<span class="comment">//Out Block: ivar = 11</span></div><div class="line">myChangeBlockVar();</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> __ViewController__viewDidLoad_block_impl_10 &#123;</div><div class="line"><span class="keyword">struct</span> __block_impl impl;</div><div class="line"><span class="keyword">struct</span> __ViewController__viewDidLoad_block_desc_10* Desc;</div><div class="line">__Block_byref_ivar_0 *ivar; <span class="comment">// by ref</span></div><div class="line">__ViewController__viewDidLoad_block_impl_10(<span class="keyword">void</span> *fp, <span class="keyword">struct</span> __ViewController__viewDidLoad_block_desc_10 *desc, __Block_byref_ivar_0 *_ivar, <span class="keyword">int</span> flags=<span class="number">0</span>) : ivar(_ivar-&gt;__forwarding) &#123;</div><div class="line">impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">impl.Flags = flags;</div><div class="line">impl.FuncPtr = fp;</div><div class="line">Desc = desc;</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>最大的变化就是ivar变量不再是int类型了，ivar变成了一个指向<code>__Block_byref_ivar_0</code>结构体的指针，<code>__Block_byref_ivar_0</code>结构如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> __Block_byref_ivar_0 &#123;</div><div class="line"><span class="keyword">void</span> *__isa;</div><div class="line">__Block_byref_ivar_0 *__forwarding;</div><div class="line"><span class="keyword">int</span> __flags;</div><div class="line"><span class="keyword">int</span> __size;</div><div class="line"><span class="keyword">int</span> ivar;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>它保存了int ivar变量，还有一个指向<code>__Block_byref_ivar_0</code>实例的指针<code>__forwarding</code>，通过下面两段代码<code>__forwarding</code>指针的用法可以知道，该指针其实指向的是对象自身：</p>
+<h1 id="Block的执行函数"><a href="#Block的执行函数" class="headerlink" title="Block的执行函数"></a>Block的执行函数</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __ViewController__viewDidLoad_block_func_10(<span class="keyword">struct</span> __ViewController__viewDidLoad_block_impl_10 *__cself) &#123;</div><div class="line">__Block_byref_ivar_0 *ivar = __cself-&gt;ivar; <span class="comment">// bound by ref</span></div><div class="line">     </div><div class="line">(ivar-&gt;__forwarding-&gt;ivar) = <span class="number">20</span>; <span class="comment">//对应count = 20;</span></div><div class="line"><span class="built_in">NSLog</span>((<span class="built_in">NSString</span> *)&amp;__NSConstantStringImpl__var_folders_mb_gqftsnzd5694x3wr5glk3sfm0000gn_T_ViewController_609dca_mi_22, (ivar-&gt;__forwarding-&gt;ivar));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">__attribute__((__blocks__(<span class="keyword">byref</span>))) __Block_byref_ivar_0 ivar = &#123;(<span class="keyword">void</span>*)<span class="number">0</span>,(__Block_byref_ivar_0 *)&amp;ivar, <span class="number">0</span>, <span class="keyword">sizeof</span>(__Block_byref_ivar_0), <span class="number">10</span>&#125;;</div><div class="line">     </div><div class="line"><span class="keyword">void</span>(*myChangeBlockVar)(<span class="keyword">void</span>) = ((<span class="keyword">void</span> (*)())&amp;__ViewController__viewDidLoad_block_impl_10((<span class="keyword">void</span> *)__ViewController__viewDidLoad_block_func_10, &amp;__ViewController__viewDidLoad_block_desc_10_DATA, (__Block_byref_ivar_0 *)&amp;ivar, <span class="number">570425344</span>));</div><div class="line">     </div><div class="line">(ivar.__forwarding-&gt;ivar)++; <span class="comment">//对应count ++;</span></div><div class="line">     </div><div class="line"><span class="built_in">NSLog</span>((<span class="built_in">NSString</span> *)&amp;__NSConstantStringImpl__var_folders_mb_gqftsnzd5694x3wr5glk3sfm0000gn_T_ViewController_609dca_mi_23, (ivar.__forwarding-&gt;ivar));</div><div class="line">     </div><div class="line">((<span class="keyword">void</span> (*)(__block_impl *))((__block_impl *)myChangeBlockVar)-&gt;FuncPtr)((__block_impl *)myChangeBlockVar);</div></pre></td></tr></table></figure>
+<p>为什么要通过<code>__forwarding</code>指针完成对ivar变量的读写修改？<br>为了保证无论是在栈上还是在堆上，都能通过都<code>__forwarding</code>指针找到在堆上创建的ivar这个<code>__ViewController__viewDidLoad_block_func_10</code>结构体，以完成对ivar-&gt;ivar（第一个ivar是<code>__ViewController__viewDidLoad_block_func_10</code>对象，第二个ivar是int类型变量）的访问和修改。</p>
+<h1 id="Block的循环引用"><a href="#Block的循环引用" class="headerlink" title="Block的循环引用"></a>Block的循环引用</h1><p>Block的循环引用原理和解决方法大家都比较熟悉，此处将结合上文的介绍，介绍一种不常用的解决Block循环引用的方法和一种借助Block参数解决该问题的方法。<br>Block循环引用原因：一个对象A有Block类型的属性，从而持有这个Block，如果Block的代码块中使用到这个对象A，或者仅仅是用用到A对象的属性，会使Block也持有A对象，导致两者互相持有，不能在作用域结束后正常释放。<br>解决原理：对象A照常持有Block，但Block不能强引用持有对象A以打破循环。<br>解决方法：<br>方法一： 对Block内要使用的对象A使用<code>__weak</code>进行修饰，Block对对象A弱引用打破循环。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">__block ViewController* weakSelf = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">self</span>.blk = ^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"In Block : %@"</span>,weakSelf);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">使用__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>)</div><div class="line">     </div><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">self</span>.blk = ^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"In Block : %@"</span>,weakSelf);</div><div class="line">&#125;;</div><div class="line">     </div><div class="line">使用宏</div><div class="line"><span class="meta">#define Weakify(x) typeof(x) __weak weak##x = x;</span></div><div class="line"><span class="meta">#define Strongfiy(x)  typeof(x) __strong x = weak##x;</span></div><div class="line">@Weakify(<span class="keyword">self</span>);</div><div class="line"><span class="keyword">self</span>.blk = ^&#123;</div><div class="line">@Strongfiy(<span class="keyword">self</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"In Block : %@"</span>,<span class="keyword">self</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>方法二：对Block内要使用的对象A使用<code>__block</code>进行修饰，并在代码块内，使用完<code>__block</code>变量后将其设为nil，并且该block必须至少执行一次。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__block XXController *blkSelf = <span class="keyword">self</span>;</div><div class="line">     <span class="keyword">self</span>.blk = ^&#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"In Block : %@"</span>,blkSelf);</div><div class="line">     blkSelf = <span class="literal">nil</span>;<span class="comment">//不能省略</span></div><div class="line">     &#125;;</div></pre></td></tr></table></figure>
+<p>在block代码块内，使用完使用完<code>__block</code>变量后将其设为nil，并且该block必须至少执行一次后，不存在内存泄露，因为此时：<br>XXController对象持有Block对象blk<br>blk对象持有<code>__block</code>变量blkSelf(类型为编译器创建的结构体)<br><code>__block</code>变量blkSelf在执行blk()之后被设置为nil（<code>__block</code>变量结构体的<code>__forwarding</code>指针指向了nil），不再持有XXController对象，打破循环</p>
+<p>第二种使用<code>__block</code>打破循环的方法，优点是：<br>可通过<code>__block</code>变量动态控制持有XXController对象的时间，运行时决定是否将nil或其他变量赋值给<code>__block</code>变量<br>不能使用<code>__weak</code>的系统中，使用<code>__unsafe_unretained</code>来替代<code>__weak</code>打破循环可能有野指针问题，使用<code>__block</code>则可避免该问题</p>
+<p>其缺点也明显：<br>必须手动保证<code>__block</code>变量最后设置为nil<br>block必须执行一次，否则<code>__block</code>不为nil循环应用仍存在<br>self.blk();//该block必须执行一次，否则还是内存泄露<br>因此，还是避免使用第二种不常用方式，直接使用<code>__weak</code>打破Block循环引用。</p>
+<p>方法三：将在Block内要使用到的对象（一般为self对象），以Block参数的形式传入，Block就不会捕获该对象，而将其作为参数使用，其生命周期系统的栈自动管理，不造成内存泄露。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.blk = ^(<span class="built_in">UIViewController</span> *vc) &#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Use Property:%@"</span>, vc.name);</div><div class="line">&#125;;</div><div class="line"><span class="keyword">self</span>.blk(<span class="keyword">self</span>);</div></pre></td></tr></table></figure>
+<p>优点：<br>简化了两行代码，更优雅<br>更明确的API设计：告诉API使用者，该方法的Block直接使用传进来的参数对象，不会造成循环引用，不用调用者再使用weak避免循环</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/传值回调/">传值回调</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/07/37104/" data-tooltip="iOS设计模式" aria-label="上一篇: iOS设计模式">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/09/43478/" data-tooltip="RunLoopManagement" aria-label="下一篇: RunLoopManagement">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/01/25/30423/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/01/25/30423/&amp;title=iOS中block的用法和理解" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/01/25/30423/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/07/37104/" data-tooltip="iOS设计模式" aria-label="上一篇: iOS设计模式">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/09/43478/" data-tooltip="RunLoopManagement" aria-label="下一篇: RunLoopManagement">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/01/25/30423/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/01/25/30423/&amp;title=iOS中block的用法和理解" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/01/25/30423/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/01/25/30423/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/01/25/30423/&amp;title=iOS中block的用法和理解">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/01/25/30423/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2017/01/25/30423/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

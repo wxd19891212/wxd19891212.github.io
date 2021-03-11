@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>iOS应用架构学习笔记 - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="我们常见的分层架构，有三层架构：视图层、业务层、数据层。也有四层架构：视图层、业务层、网络层、本地数据层。这里说三层、四层，跟TCP/IP所谓的五层或者七层不是同一种概念。再具体说就是：你的架构在逻辑上设计的是几层那就是几层，具体每一层的名称和作用，没有特定的规范, 这主要是针对模块分类而言的。">
+<meta name="keywords" content="thoughts,iOS架构">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS应用架构学习笔记">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2017/07/07/6620/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="我们常见的分层架构，有三层架构：视图层、业务层、数据层。也有四层架构：视图层、业务层、网络层、本地数据层。这里说三层、四层，跟TCP/IP所谓的五层或者七层不是同一种概念。再具体说就是：你的架构在逻辑上设计的是几层那就是几层，具体每一层的名称和作用，没有特定的规范, 这主要是针对模块分类而言的。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-05-17T12:43:27.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS应用架构学习笔记">
+<meta name="twitter:description" content="我们常见的分层架构，有三层架构：视图层、业务层、数据层。也有四层架构：视图层、业务层、网络层、本地数据层。这里说三层、四层，跟TCP/IP所谓的五层或者七层不是同一种概念。再具体说就是：你的架构在逻辑上设计的是几层那就是几层，具体每一层的名称和作用，没有特定的规范, 这主要是针对模块分类而言的。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS应用架构学习笔记
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-07-07T23:14:32+08:00">
+	
+		    7月 07, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/Arch/">Arch</a>, <a class="category-link" href="/categories/Arch/iOS/">iOS</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>我们常见的分层架构，有三层架构：视图层、业务层、数据层。也有四层架构：视图层、业务层、网络层、本地数据层。<br>这里说三层、四层，跟TCP/IP所谓的五层或者七层不是同一种概念。再具体说就是：你的架构在逻辑上设计的是几层那就是几层，具体每一层的名称和作用，没有特定的规范, 这主要是针对模块分类而言的。<br><a id="more"></a><br>也有说MVC架构，MVVM架构的，这种层次划分，主要是针对数据流动的方向而言的。<br>在实际情况中，针对数据流动方向做的设计和针对模块分类做的设计是会放在一起的，也就是说，一个MVC架构可以是四层：展现层、业务层、网络层、本地数据层。<br>那么，为什么我要说这个？<br>大概在五六年前，业界很流行三层架构这个术语。然后各种文档资料漫天的三层架构，并且喜欢把它与MVC放在一起说，MVC三层架构/三层架构MVC，以至于很多人就会认为三层架构就是MVC，MVC就是三层架构。其实不是的。三层架构里面其实没有Controller的概念，而且三层架构描述的侧重点是模块之间的逻辑关系。MVC有Controller的概念，它描述的侧重点在于数据流动方向。</p>
+<blockquote>
+<p>好，为什么流行起来的是三层架构，而不是四层架构或五层架构？</p>
+</blockquote>
+<p>因为所有的模块角色只会有三种：数据管理者、数据加工者、数据展示者，意思也就是，笼统说来，软件只会有三层，每一层扮演一个角色。其他的第四层第五层，一般都是这三层里面的其中之一分出来的，最后都能归纳进这三层的某一层中去，所以用三层架构来描述就比较普遍。</p>
+<p>1.视图层设计方案<br>2.网络层设计方案<br>3.本地持久化方案<br>4.动态部署方案<br>上面这四大点，稍微细说一下就是：</p>
+<ul>
+<li>页面如何组织，才能尽可能降低业务方代码的耦合度？尽可能降低业务方开发界面的复杂度，提高他们的效率？</li>
+<li>如何让业务开发工程师方便安全地调用网络API？然后尽可能保证用户在各种网络环境下都能有良好的体验？</li>
+<li>当数据有在本地存取的需求的时候，如何能够保证数据在本地的合理安排？如何尽可能地减小性能消耗？</li>
+<li>iOS应用有审核周期，如何能够通过不发版本的方式展示新的内容给用户？如何修复紧急bug？</li>
+</ul>
+<p>一个好的架构</p>
+<ul>
+<li>遵循代码规范代码，分类明确(没有难以区分模块的文件夹或模块)</li>
+<li>注释明了, 逻辑清晰, 不用文档，或很少文档，就能让业务方上手</li>
+<li>思路和方法要统一，尽量不要多元</li>
+<li>没有横向依赖，尽可能少的跨层访问</li>
+<li>对业务方该限制的地方有限制，该灵活的地方要给业务方创造灵活实现的条件</li>
+<li>易测试，易拓展</li>
+<li>保持一定量的超前性</li>
+<li>接口少，接口参数少</li>
+<li>低内存，高性能</li>
+</ul>
+<blockquote>
+<p>遵循代码规范代码，分类明确(没有难以区分模块的文件夹或模块)</p>
+</blockquote>
+<p>代码整齐是每一个工程师的基本素质，先不说你搞定这个问题的方案有多好，解决速度有多快，如果代码不整齐，一切都白搭。因为你的代码是要给别人看的，你自己也要看。如果哪一天架构有修改，正好改到这个地方，你很容易自己都看不懂。另外，破窗理论提醒我们，如果代码不整齐分类不明确，整个架构会随着一次一次的拓展而越来越混乱。<br>分类明确的字面意思大家一定都了解，但还有一个另外的意思，那就是：不要让一个类或者一个模块做两种不同的事情。如果有类或某模块做了两种不同的事情，一方面不适合未来拓展，另一方面也会造成分类困难。<br>不要搞Common，Core这些东西。每家公司的架构代码库里面，最恶心的一定是这两个名字命名的文件夹，我这么说一定不会错。不要开Common，Core这样的文件夹，开了之后后来者一定会把这个地方搞得一团糟，最终变成Common也不Common，Core也不Core。要记住，架构是不断成长的，是会不断变化的。不是每次成长每次变化，都是由你去实现的。如果真有什么东西特别小，那就索性为了他单独开辟一个模块就好了，小就小点，关键是要有序。</p>
+<blockquote>
+<p>不用文档，或很少文档，就能让业务方上手</p>
+</blockquote>
+<p>谁特么会去看文档啊，业务方他们已经被产品经理逼得很忙了。所以你要尽可能让你的API名字可读性强，对于iOS来说，objc这门语言的特性把这个做到了极致，函数名长就长一点，不要紧。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">好的函数名：</div><div class="line">    - (<span class="built_in">NSDictionary</span> *)exifDataOfImage:(<span class="built_in">UIImage</span> *)image atIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath;</div><div class="line"></div><div class="line">坏的函数名：</div><div class="line">    - (<span class="keyword">id</span>)exifData:(<span class="built_in">UIImage</span> *)image position:(<span class="keyword">id</span>)indexPath callback:(<span class="keyword">id</span>&lt;ErrorDelegate&gt;)delegate;</div><div class="line"></div><div class="line">为什么坏？</div><div class="line">    <span class="number">1.</span> 不要直接返回<span class="keyword">id</span>或者传入<span class="keyword">id</span>，实在不行，用<span class="keyword">id</span>&lt;protocol&gt;也比<span class="keyword">id</span>好。如果连这个都做不到，你要好好考虑你的架构是不是有问题。</div><div class="line">    <span class="number">2.</span> 要告知业务方要传的东西是什么，比如要传Image，那就写上ofImage。如果要传位置，那就要写上IndexPath，而不是用position这么笼统的东西</div><div class="line">    <span class="number">3.</span> 没有任何理由要把delegate作为参数传进去，一定不会有任何情况不得不这么做的。而且delegate这个参数根本不是这个函数要解决的问题的充要条件，如果你发现你不得不这么做，那一定是架构有问题！</div></pre></td></tr></table></figure>
+<blockquote>
+<p>思路和方法要统一，尽量不要多元</p>
+</blockquote>
+<p>解决一个问题会有很多种方案，但是一旦确定了一种方案，就不要在另一个地方采用别的方案了。也就是做架构的时候，你得时刻记住当初你决定要处理这样类型的问题的方案是什么，以及你的初衷是什么，不要摇摆不定。<br>另外，你当初设立这个模块一定是有想法有原因的，要记录下你的解决思路，不要到时候换个地方你又灵光一现啥的，引入了其他方案，从而导致异构。<br>要是一个框架里面解决同一种类似的问题有各种五花八门的方法或者类，我觉得做这个架构的架构师一定是自己都没想清楚就开始搞了。</p>
+<blockquote>
+<p>没有横向依赖，万不得已不出现跨层访问</p>
+</blockquote>
+<p>没有横向依赖是很重要的，这决定了你将来要对这个架构做修补所需要的成本有多大。要做到没有横向依赖，这是很考验架构师的模块分类能力和是否熟悉业务的。<br>跨层访问是指数据流向了跟自己没有对接关系的模块。有的时候跨层访问是不可避免的，比如网络底层里面信号从2G变成了3G变成了4G，这是有可能需要跨层通知到View的。但这种情况不多，一旦出现就要想尽一切办法在本层搞定或者交给上层或者下层搞定，尽量不要出现跨层的情况。跨层访问同样也会增加耦合度，当某一层需要整体替换的时候，牵涉面就会很大。</p>
+<blockquote>
+<p>对业务方该限制的地方有限制，该灵活的地方要给业务方创造灵活实现的条件</p>
+</blockquote>
+<p>把这点做好，很依赖于架构师的经验。架构师必须要有能力区分哪些情况需要限制灵活性，哪些情况需要创造灵活性。比如对于Core Data技术栈来说，ManagedObject理论上是可以出现在任何地方的，那就意味着任何地方都可以修改ManagedObject，这就导致ManagedObjectContext在同步修改的时候把各种不同来源的修改同步进去。这时候就需要限制灵活性，只对外公开一个修改接口，不暴露任何ManagedObject在外面。<br>如果是设计一个ABTest相关的API的时候，我们又希望增加它的灵活性。使得业务方不光可以通过Target-Action的模式实现ABtest，也要可以通过Block的方式实现ABTest，要尽可能满足灵活性，减少业务方的使用成本。</p>
+<blockquote>
+<p>易测试易拓展</p>
+</blockquote>
+<p>老生常谈，要实现易测试易拓展，那就要提高模块化程度，尽可能减少依赖关系，便于mock。另外，如果是高度模块化的架构，拓展起来将会是一件非常容易的事情。</p>
+<blockquote>
+<p>保持一定量的超前性</p>
+</blockquote>
+<p>这一点能看出架构师是否关注行业动态，是否能准确把握技术走向。保持适度的技术上的超前性，能够使得你的架构更新变得相对轻松。<br>另外，这里的超前性也不光是技术上的，还有产品上的。谁说架构师就不需要跟产品经理打交道了，没事多跟产品经理聊聊天，听听他对产品未来走向的畅想，你就可以在合理的地方为他的畅想留一条路子。同时，在创业公司的环境下，很多产品需求其实只是为了赶产品进度而产生的妥协方案，最后还是会转到正轨的。这时候业务方可以不实现转到正规的方案，但是架构这边，是一定要为这种可预知的改变做准备的。</p>
+<blockquote>
+<p>接口少，接口参数少</p>
+</blockquote>
+<p>越少的接口越少的参数，就能越降低业务方的使用成本。当然，充要条件还是要满足的，如何在满足充要条件的情况下尽可能地减少接口和参数数量，这就能看出架构师的功力有多深厚了。</p>
+<blockquote>
+<p>高性能</p>
+</blockquote>
+<p>为什么高性能排在最后一位？<br>高性能非常重要，但是在客户端架构中，它不是第一考虑因素。原因有下：</p>
+<ul>
+<li>客户端业务变化非常之快，做架构时首要考虑因素应当是便于业务方快速满足产品需求，因此需要尽可能提供简单易用效果好的接口给业务方，而不是提供高性能的接口给业务方。</li>
+<li>苹果平台的性能非常之棒，正常情况下很少会出现由于性能不够导致的用户体验问题。</li>
+<li>苹果平台的优化手段相对有限，甚至于有些时候即便动用了无所不用其极的手段乃至不择手段牺牲了稳定性，性能提高很有可能也只不过是100ms到90ms的差距。10%的性能提升对于服务端来说很不错了，因为服务端动不动就是几十万上百万的访问量，几十万上百万个10ms是很可观的。但是对于客户端的用户来说，他无法感知这10ms的差别，如果从10s优化成9s用户还是有一定感知的，但是100ms变90ms，我觉得吧，还是别折腾了。</li>
+</ul>
+<p>但是！不重要不代表用不着去做，关于性能优化的东西，我会对应放到各系列文章里面去。比如网络层优化，那就会在网络层方案的那篇文章里面去写，对应每层架构都有每层架构的不同优化方案，我都会在各自文章里面一一细说。</p>
+<h1 id="一、视图层设计方案"><a href="#一、视图层设计方案" class="headerlink" title="一、视图层设计方案"></a>一、视图层设计方案</h1><p>一般来说，一个不够好的View层架构，主要原因有以下五种：<br>1.代码混乱不规范<br>2.过多继承导致的复杂依赖关系<br>3.模块化程度不够高，组件粒度不够细<br>4.横向依赖<br>5.架构设计失去传承</p>
+<h2 id="View层的代码结构规范"><a href="#View层的代码结构规范" class="headerlink" title="View层的代码结构规范"></a>View层的代码结构规范</h2><p>制定代码规范严格来讲不属于View层架构的事情，但它对View层架构未来的影响会比较大，也是属于架构师在设计View层架构时需要考虑的事情。制定View层规范的重要性在于：<br>1.提高业务方View层的可读性可维护性<br>2.防止业务代码对架构产生腐蚀<br>3.确保传承<br>4.保持架构发展的方向不轻易被不合理的意见所左右</p>
+<p>最后，什么是优秀的架构，这的确是一个非常艰难的话题。万能药是不存在的。我不认为有某种架构能够解决所有问题，我觉得应该根据从客户那里收集的需求和用例来考虑架构的事情。因此，根据需求，架构很可能会与我所使用的完全不同。现在，我默认会使用 MVVM 架构，而今后，ReSwift 或者其他架构可能会更加合适。编程的好处就在于我们每天都需要学习，两年后我的观点可能与现在大相径庭。如果不是这样的话，那么我就会担心是不是我学得东西还不够多。</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/iOS架构/">iOS架构</a> <a class="tag tag--primary tag--small t-link" href="/tags/thoughts/">thoughts</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/05/34074/" data-tooltip="评论系统跟换为Gitment" aria-label="上一篇: 评论系统跟换为Gitment">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/08/2/" data-tooltip="iOS设计模式之抽象工厂（三）" aria-label="下一篇: iOS设计模式之抽象工厂（三）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/07/07/6620/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/07/07/6620/&amp;title=iOS应用架构学习笔记" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/07/07/6620/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/05/34074/" data-tooltip="评论系统跟换为Gitment" aria-label="上一篇: 评论系统跟换为Gitment">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/08/2/" data-tooltip="iOS设计模式之抽象工厂（三）" aria-label="下一篇: iOS设计模式之抽象工厂（三）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/07/07/6620/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/07/07/6620/&amp;title=iOS应用架构学习笔记" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/07/07/6620/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/07/07/6620/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/07/07/6620/&amp;title=iOS应用架构学习笔记">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/07/07/6620/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2017/07/07/6620/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

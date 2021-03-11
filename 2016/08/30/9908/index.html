@@ -1,0 +1,831 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>SDWebImage相关类 源码阅读记录（六） - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="SDWebImage其他一些相关类源码阅读记录">
+<meta name="keywords" content="源码阅读">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SDWebImage相关类 源码阅读记录（六）">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2016/08/30/9908/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="SDWebImage其他一些相关类源码阅读记录">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-03-09T06:42:21.922Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDWebImage相关类 源码阅读记录（六）">
+<meta name="twitter:description" content="SDWebImage其他一些相关类源码阅读记录">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            SDWebImage相关类 源码阅读记录（六）
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-08-30T20:14:32+08:00">
+	
+		    8月 30, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/SDWebImage/">SDWebImage</a>, <a class="category-link" href="/categories/SDWebImage/Github/">Github</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>SDWebImage其他一些相关类源码阅读记录<br><a id="more"></a><br><h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#UIView-WebCacheOperation"><span class="toc-text">UIView+WebCacheOperation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SDWebImagePrefetcher"><span class="toc-text">SDWebImagePrefetcher</span></a></li></ol></p>
+<h1 id="UIView-WebCacheOperation"><a href="#UIView-WebCacheOperation" class="headerlink" title="UIView+WebCacheOperation"></a>UIView+WebCacheOperation</h1><p>下面我们先来看看UIView+WebCacheOperation里面都写了些什么:<br>UIView+WebCacheOperation这个分类提供了三个方法,用于操作绑定关系</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"SDWebImageManager.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">WebCacheOperation</span>)</span></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *  Set the image load operation (storage in a UIView based dictionary)</span></div><div class="line"><span class="comment">设置图像加载操作（存储在和UIView做绑定的字典里面）</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  @param operation the operation</span></div><div class="line"><span class="comment"> *  @param key       key for storing the operation</span></div><div class="line"><span class="comment"> */</span></div><div class="line">- (<span class="keyword">void</span>)sd_setImageLoadOperation:(<span class="keyword">id</span>)operation forKey:(<span class="built_in">NSString</span> *)key;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *  Cancel all operations for the current UIView and key</span></div><div class="line"><span class="comment">  用这个key找到当前UIView上面的所有操作并取消</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  @param key key for identifying the operations</span></div><div class="line"><span class="comment"> */</span></div><div class="line">- (<span class="keyword">void</span>)sd_cancelImageLoadOperationWithKey:(<span class="built_in">NSString</span> *)key;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *  Just remove the operations corresponding to the current UIView and key without cancelling them</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *  @param key key for identifying the operations</span></div><div class="line"><span class="comment"> */</span></div><div class="line">- (<span class="keyword">void</span>)sd_removeImageLoadOperationWithKey:(<span class="built_in">NSString</span> *)key;</div></pre></td></tr></table></figure>
+<p>为了方便管理和找到视图正在进行的一些操作,WebCacheOperation将每一个视图的实例和它正在进行的操作(下载和缓存的组合操作)绑定起来,实现操作和视图一一对应关系,以便可以随时拿到视图正在进行的操作,控制其取消等,如何进行绑定我们在下面分析:<br><code>UIView+WebCacheOperation.m</code>文件内<br><code>- (NSMutableDictionary *)operationDictionary</code>用到了<code>&lt;objc/runtime.h&gt;</code>中定义的两个函数:</p>
+<div class="alert info"><p>•    objc_setAssociatedObject<br>•    objc_getAssociatedObject</p>
+</div>
+<p><code>objc_setAssociatedObject</code>作用是<strong>对已存在的类在扩展中添加自定义的属性 </strong>,通常推荐的做法是添加属性的key最好是static char类型的,通常来说该属性的key应该是常量唯一的.<br><code>objc_getAssociatedObject</code>根据key获得与对象绑定的属性.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSMutableDictionary</span> *)operationDictionary &#123;</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">这个loadOperationKey 的定义是:static char loadOperationKey;</span></div><div class="line"><span class="comment">它对应的绑定在UIView的属性是operationDictionary(NSMutableDictionary类型)</span></div><div class="line"><span class="comment">operationDictionary的value是操作,key是针对不同类型视图和不同类型的操作设定的字符串</span></div><div class="line"><span class="comment">注意:&amp;是一元运算符结果是右操作对象的地址(&amp;loadOperationKey返回static char loadOperationKey的地址)</span></div><div class="line"><span class="comment">*/</span></div><div class="line">    <span class="built_in">NSMutableDictionary</span> *operations = objc_getAssociatedObject(<span class="keyword">self</span>, &amp;loadOperationKey);</div><div class="line"><span class="comment">//如果可以查到operations,就rerun,反正给视图绑定一个新的,空的operations字典</span></div><div class="line">    <span class="keyword">if</span> (operations) &#123;</div><div class="line">        <span class="keyword">return</span> operations;</div><div class="line">    &#125;</div><div class="line">    operations = [<span class="built_in">NSMutableDictionary</span> dictionary];</div><div class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;loadOperationKey, operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line">    <span class="keyword">return</span> operations;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)sd_cancelImageLoadOperationWithKey:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line">    <span class="comment">// 取消正在下载的队列</span></div><div class="line">    <span class="built_in">NSMutableDictionary</span> *operationDictionary = [<span class="keyword">self</span> operationDictionary];</div><div class="line"><span class="comment">//如果 operationDictionary可以取到,根据key可以得到与视图相关的操作,取消他们,并根据key值,从operationDictionary里面删除这些操作</span></div><div class="line">    <span class="keyword">id</span> operations = [operationDictionary objectForKey:key];</div><div class="line">    <span class="keyword">if</span> (operations) &#123;</div><div class="line">        <span class="keyword">if</span> ([operations isKindOfClass:[<span class="built_in">NSArray</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation <span class="keyword">in</span> operations) &#123;</div><div class="line">                <span class="keyword">if</span> (operation) &#123;</div><div class="line">                    [operation cancel];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([operations conformsToProtocol:<span class="class"><span class="keyword">@protocol</span>(<span class="title">SDWebImageOperation</span>)])</span>&#123;</div><div class="line">            [(<span class="keyword">id</span>&lt;SDWebImageOperation&gt;) operations cancel];</div><div class="line">        &#125;</div><div class="line">        [operationDictionary removeObjectForKey:key];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="SDWebImagePrefetcher"><a href="#SDWebImagePrefetcher" class="headerlink" title="SDWebImagePrefetcher"></a>SDWebImagePrefetcher</h1><blockquote>
+<p>Prefetch some URLs in the cache for future use. Images are downloaded in low priority.<br>预取缓存中的一些URL以供将来使用。 图像以低优先级下载。</p>
+</blockquote>
+<p>两个代理方法</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当图像被预取完时调用</span></div><div class="line">- (<span class="keyword">void</span>)imagePrefetcher:(SDWebImagePrefetcher *)imagePrefetcher didPrefetchURL:(<span class="built_in">NSURL</span> *)imageURL finishedCount:(<span class="built_in">NSUInteger</span>)finishedCount totalCount:(<span class="built_in">NSUInteger</span>)totalCount;</div><div class="line"><span class="comment">//当全部图像被预取完时调用</span></div><div class="line">- (<span class="keyword">void</span>)imagePrefetcher:(SDWebImagePrefetcher *)imagePrefetcher didFinishWithTotalCount:(<span class="built_in">NSUInteger</span>)totalCount skippedCount:(<span class="built_in">NSUInteger</span>)skippedCount;</div></pre></td></tr></table></figure>
+<p>核心方法循环遍历<code>- (void)startPrefetchingAtIndex:(NSUInteger)index {}</code>调用<code>SDWebImageManager</code>的实例方法<code>- (id &lt;SDWebImageOperation&gt;)downloadImageWithURL:
+                                         options:
+                                        progress:
+                                       completed:</code><br>获取图片<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)startPrefetchingAtIndex:(<span class="built_in">NSUInteger</span>)index &#123;</div><div class="line">    <span class="keyword">if</span> (index &gt;= <span class="keyword">self</span>.prefetchURLs.count) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">self</span>.requestedCount++;</div><div class="line">    [<span class="keyword">self</span>.manager downloadImageWithURL:<span class="keyword">self</span>.prefetchURLs[index] options:<span class="keyword">self</span>.options progress:<span class="literal">nil</span> completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL) &#123;</div><div class="line">        <span class="keyword">if</span> (!finished) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">self</span>.finishedCount++;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (image) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">self</span>.progressBlock) &#123;</div><div class="line">                <span class="keyword">self</span>.progressBlock(<span class="keyword">self</span>.finishedCount,[<span class="keyword">self</span>.prefetchURLs count]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">self</span>.progressBlock) &#123;</div><div class="line">                <span class="keyword">self</span>.progressBlock(<span class="keyword">self</span>.finishedCount,[<span class="keyword">self</span>.prefetchURLs count]);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// Add last failed</span></div><div class="line">            <span class="keyword">self</span>.skippedCount++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span>.delegate respondsToSelector:<span class="keyword">@selector</span>(imagePrefetcher:didPrefetchURL:finishedCount:totalCount:)]) &#123;</div><div class="line">            [<span class="keyword">self</span>.delegate imagePrefetcher:<span class="keyword">self</span></div><div class="line">                            didPrefetchURL:<span class="keyword">self</span>.prefetchURLs[index]</div><div class="line">                             finishedCount:<span class="keyword">self</span>.finishedCount</div><div class="line">                                totalCount:<span class="keyword">self</span>.prefetchURLs.count</div><div class="line">             ];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.prefetchURLs.count &gt; <span class="keyword">self</span>.requestedCount) &#123;</div><div class="line">            <span class="built_in">dispatch_async</span>(<span class="keyword">self</span>.prefetcherQueue, ^&#123;</div><div class="line">                [<span class="keyword">self</span> startPrefetchingAtIndex:<span class="keyword">self</span>.requestedCount];</div><div class="line">            &#125;);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">self</span>.finishedCount == <span class="keyword">self</span>.requestedCount) &#123;</div><div class="line">            [<span class="keyword">self</span> reportStatus];</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">self</span>.completionBlock) &#123;</div><div class="line">                <span class="keyword">self</span>.completionBlock(<span class="keyword">self</span>.finishedCount, <span class="keyword">self</span>.skippedCount);</div><div class="line">                <span class="keyword">self</span>.completionBlock = <span class="literal">nil</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">self</span>.progressBlock = <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>相关阅读：<br><a href="/2016/08/05/review-SDWebImage-Code/">SDWebImage 源码阅读记录（一）</a><br><a href="/2016/08/07/SDWebImageManager/">SDWebImageManager 源码阅读记录（二）</a><br><a href="/2016/08/08/SDWebImageDownloader/">SDWebImageDownloader 源码阅读记录（三）</a><br><a href="/2016/08/08/SDWebImageDownloaderOperation/">SDWebImageDownloaderOperation 源码阅读记录（四）</a><br><a href="/2016/08/09/SDWebImageCache/">SDWebImageCache 源码阅读记录（五）</a><br><a href="/2016/08/10/SDWebImage-other-interested-parties/">SDWebImage相关类 源码阅读记录（六）</a></p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/源码阅读/">源码阅读</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/09/43478/" data-tooltip="RunLoopManagement" aria-label="上一篇: RunLoopManagement">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/26/28513/" data-tooltip="SDWebImageCache 源码阅读记录（五）" aria-label="下一篇: SDWebImageCache 源码阅读记录（五）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/30/9908/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/30/9908/&amp;title=SDWebImage相关类 源码阅读记录（六）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/30/9908/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/09/43478/" data-tooltip="RunLoopManagement" aria-label="上一篇: RunLoopManagement">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/26/28513/" data-tooltip="SDWebImageCache 源码阅读记录（五）" aria-label="下一篇: SDWebImageCache 源码阅读记录（五）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/30/9908/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/30/9908/&amp;title=SDWebImage相关类 源码阅读记录（六）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/30/9908/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/30/9908/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/30/9908/&amp;title=SDWebImage相关类 源码阅读记录（六）">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/30/9908/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2016/08/30/9908/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

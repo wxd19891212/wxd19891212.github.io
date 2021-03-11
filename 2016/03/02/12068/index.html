@@ -1,0 +1,963 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>MarkDown基本用法和标签插件示例 - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="MarkDown基础用法及其代码">
+<meta name="keywords" content="MarkDown">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MarkDown基本用法和标签插件示例">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2016/03/02/12068/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="MarkDown基础用法及其代码">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-Highlight Text-1.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5?imageView/3/w/200/h/200">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5?imageView/3/w/200/h/200">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg">
+<meta property="og:image" content="https://d1u9biwaxjngwg.cloudfront.net/tag-plugins-showcase/car-1.jpg">
+<meta property="og:updated_time" content="2018-03-09T06:42:21.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MarkDown基本用法和标签插件示例">
+<meta name="twitter:description" content="MarkDown基础用法及其代码">
+<meta name="twitter:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-Highlight Text-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            MarkDown基本用法和标签插件示例
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-03-02T22:00:32+08:00">
+	
+		    3月 02, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/MarkDown/">MarkDown</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>MarkDown基础用法及其代码<br><a id="more"></a><br><h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MarkDown基础用法及其代码"><span class="toc-text">MarkDown基础用法及其代码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#高亮"><span class="toc-text">高亮</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入网络图片"><span class="toc-text">插入网络图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片缩放"><span class="toc-text">图片缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程图样例"><span class="toc-text">流程图样例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序图样例"><span class="toc-text">顺序图样例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隐藏标签"><span class="toc-text">隐藏标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Title用法"><span class="toc-text">Title用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Alert"><span class="toc-text">Alert</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block-Quote"><span class="toc-text">Block Quote</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jsFiddle"><span class="toc-text">jsFiddle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Image"><span class="toc-text">Image</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-image"><span class="toc-text">Wide image</span></a></li></ol></p>
+<h1 id="MarkDown基础用法及其代码"><a href="#MarkDown基础用法及其代码" class="headerlink" title="MarkDown基础用法及其代码"></a>MarkDown基础用法及其代码</h1><p><a href="#图片缩放">测试跳转</a><br><strong>加粗加粗加粗加粗</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">**加粗加粗加粗加粗**</div></pre></td></tr></table></figure></p>
+<p><em>强调强调强调强调</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*强调强调强调强调*</div></pre></td></tr></table></figure>
+<p><u>下划线下划线下划线t</u></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">u</span>&gt;</span>下划线下划线下划线 不建议使用<span class="tag">&lt;/<span class="name">u</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><span style="border-bottom:2px dashed green;">2px下划虚线</span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"border-bottom:2px dashed green;"</span>&gt;</span>2px下划虚线<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><span style="border-bottom:1px solid red;">1px下划实线</span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"border-bottom:1px solid red;"</span>&gt;</span>1px下划实线<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h2><p><del>删除线删除线删除线</del><br><!--==高亮高亮高亮高亮==--></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% hl_text danger %&#125;31231&#123;% endhl_text %&#125;</div><div class="line">&#123;% hl_text #00FFFF %&#125;3123131&#123;% endhl_text %&#125;</div><div class="line">&#123;% hl_text primary %&#125;31231&#123;% endhl_text %&#125;</div></pre></td></tr></table></figure>
+<p><code>123131</code></p>
+<p><img src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-Highlight Text-1.png" alt="Highlight Text"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% hl_text danger %&#125;your highlighted text&#123;% endhl_text %&#125;这里是其他内容</div><div class="line"></div><div class="line">&#123;% hl_text [(classes | hexa code | rgb color | rgba color)] %&#125; </div><div class="line">content</div><div class="line"></div><div class="line">&#123;% endhl_text %&#125;</div><div class="line"></div><div class="line">E.g (hexa color) :</div><div class="line">&#123;% hl_text #00FFFF %&#125;your highlighted text&#123;% endhl_text %&#125;</div><div class="line">E.g (rgba color) :</div><div class="line">&#123;% hl_text rgba(12, 12, 12, 0.4) %&#125;your highlighted text&#123;% endhl_text %&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classes</td>
+<td><strong>classes</strong> : <ul><li>red</li><li>green</li><li>blue</li><li>purple</li><li>orange</li><li>yellow</li><li>cyan</li><li>primary</li><li>success</li><li>warning</li><li>danger</li></ul></td>
+</tr>
+</tbody>
+</table>
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+<figure class="codeblock codeblock--tabbed"><figcaption><a href="http://example.com" target="_blank" rel="external">tabbed_codeblock</a><ul class="tabs"><li class="tab active">js</li><li class="tab">css</li></ul></figcaption><div class="tabs-content"><figure class="highlight js" style="display: block;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="string">'test'</span>;</span><br></pre></td></tr></tbody></table></figure><figure class="highlight css" style="display: none;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.btn</span> {</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div></figure>
+<figure class="highlight plain"><figcaption><span>tabbed_codeblock</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;% tabbed_codeblock example http://example.com %&#125;</div><div class="line">      &lt;!-- tab js --&gt;</div><div class="line">          var test = &apos;test&apos;;</div><div class="line">      &lt;!-- endtab --&gt;</div><div class="line">      &lt;!-- tab css --&gt;</div><div class="line">          .btn &#123;</div><div class="line">              color: red;</div><div class="line">          &#125;</div><div class="line">      &lt;!-- endtab --&gt;</div><div class="line">  &#123;% endtabbed_codeblock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">代码块</div><div class="line">&#123;% blockquote %&#125;</div><div class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</div><div class="line">&#123;% endblockquote %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><figcaption><span>这里是标题</span><a href="http://www.baidu.com" target="_blank" rel="external">链接地址</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSLog</span>(<span class="string">"这里是OC的代码块"</span>);</div><div class="line">&lt;!--这里是注释--&gt;</div></pre></td></tr></table></figure>
+<!--这里是注释-->
+<blockquote>
+<p>引用<br>啦啦啦</p>
+</blockquote>
+<ul>
+<li>无序列表1</li>
+<li>无序列表2</li>
+<li>无序列表3</li>
+<li>无序列表4</li>
+</ul>
+<p>右移右移右移</p>
+<p><a href="http://www.baidu.com" target="_blank" rel="external">链接</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">链接</th>
+<th style="text-align:center">结果</th>
+<th style="text-align:right">原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">文本内容</td>
+<td style="text-align:center"><strong><code>是</code></strong></td>
+<td style="text-align:right">同协议同域名同端口</td>
+</tr>
+<tr>
+<td style="text-align:left">文本内容</td>
+<td style="text-align:center"><strong><code>是</code></strong></td>
+<td style="text-align:right">同协议同域名同端口</td>
+</tr>
+<tr>
+<td style="text-align:left">文本内容</td>
+<td style="text-align:center"><strong><code>是</code></strong></td>
+<td style="text-align:right">同协议同域名同端口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="插入网络图片"><a href="#插入网络图片" class="headerlink" title="插入网络图片"></a>插入网络图片</h2><p><img src="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5" alt="图片名字"></p>
+<h2 id="图片缩放"><a href="#图片缩放" class="headerlink" title="图片缩放"></a>图片缩放</h2><p><img src="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5?imageView/3/w/200/h/200" alt="图片名字"><br><div class="figure center" style="width:;"><a class="fancybox" href="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5?imageView/3/w/200/h/200" title="可点击的图片" data-caption="可点击的图片" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="https://upload-images.jianshu.io/upload_images/3807682-3322cbd45405f7e5?imageView/3/w/200/h/200" alt="可点击的图片"></a><span class="caption">可点击的图片</span></div><br>新段落新段落新段落新段落新段落新段落</p>
+<h2 id="流程图样例"><a href="#流程图样例" class="headerlink" title="流程图样例"></a>流程图样例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: Start:&gt;http://www.google.com[blank]</div><div class="line">e=&gt;end:&gt;http://www.google.com</div><div class="line">op1=&gt;operation: My Operation</div><div class="line">sub1=&gt;subroutine: My Subroutine</div><div class="line">cond=&gt;condition: Yes</div><div class="line">or No?:&gt;http://www.google.com</div><div class="line">io=&gt;inputoutput: catch something...</div><div class="line"></div><div class="line">st-&gt;op1-&gt;cond</div><div class="line">cond(yes)-&gt;io-&gt;e</div><div class="line">cond(no)-&gt;sub1(right)-&gt;op1</div></pre></td></tr></table></figure>
+<h2 id="顺序图样例"><a href="#顺序图样例" class="headerlink" title="顺序图样例"></a>顺序图样例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Andrew-&gt;China: Says Hello</div><div class="line">Note right of China: China thinks about it</div><div class="line">China--&gt;Andrew: How are you?</div><div class="line">Andrew-&gt;&gt;China: I am good thanks!</div></pre></td></tr></table></figure>
+<h1 id="隐藏标签"><a href="#隐藏标签" class="headerlink" title="隐藏标签"></a>隐藏标签</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tags:</div><div class="line">- tags</div><div class="line">showTags: false</div><div class="line"></div><div class="line">- social </div><div class="line">showSocial: false</div><div class="line"></div><div class="line">- pagination</div><div class="line">showPagination: false</div></pre></td></tr></table></figure>
+<h1 id="Title用法"><a href="#Title用法" class="headerlink" title="Title用法"></a>Title用法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">disqusIdentifier: fdsF34ff34</div><div class="line">keywords:</div><div class="line">- javascript</div><div class="line">- hexo</div><div class="line">clearReading: true</div><div class="line">thumbnailImage: image-1.png</div><div class="line">thumbnailImagePosition: bottom</div><div class="line">autoThumbnailImage: yes</div><div class="line">metaAlignment: center</div><div class="line">coverImage: image-2.png</div><div class="line">coverCaption: &quot;A beautiful sunrise&quot;</div><div class="line">coverMeta: out</div><div class="line">coverSize: full</div><div class="line">coverImage: image-2.png</div><div class="line">gallery:</div><div class="line">    - image-3.jpg &quot;New York&quot;</div><div class="line">    - image-4.png &quot;Paris&quot;</div><div class="line">    - http://i.imgur.com/o9r19kD.jpg &quot;Dubai&quot;</div><div class="line">    - https://example.com/orignal.jpg https://example.com/thumbnail.jpg &quot;Sidney&quot;</div><div class="line">comments: false</div><div class="line">meta: false</div><div class="line">actions: false</div></pre></td></tr></table></figure>
+<h1 id="Alert"><a href="#Alert" class="headerlink" title="Alert"></a>Alert</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert danger no-icon %&#125;</div><div class="line">Here is a danger alert without icon</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure>
+<div class="alert danger no-icon"><p>Here is a danger alert without icon</p>
+</div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert info %&#125;</div><div class="line">Here is a danger alert without icon</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure>
+<div class="alert info"><p>Here is a info alert </p>
+</div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert warning %&#125;</div><div class="line">Here is a warning alert </div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure>
+<div class="alert warning"><p>Here is a warning alert </p>
+</div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert success %&#125;</div><div class="line">Here is a success alert </div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure>
+<div class="alert success"><p>Here is a success alert </p>
+</div>
+<h1 id="Block-Quote"><a href="#Block-Quote" class="headerlink" title="Block Quote"></a>Block Quote</h1><blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+<footer><strong>David Levithan Wide Awake</strong></footer></blockquote>
+<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io" target="_blank" rel="external">http://devdocs.io</a></p>
+<footer><strong>@DevDocs</strong><cite><a href="https://twitter.com/devdocs/status/356095192085962752" target="_blank" rel="external">DevDocs</a></cite></footer></blockquote>
+<h1 id="jsFiddle"><a href="#jsFiddle" class="headerlink" title="jsFiddle"></a>jsFiddle</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% jsfiddle shorttag [tabs] [skin] [width] [height] %&#125;</div></pre></td></tr></table></figure>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/ccWP7/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<h1 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h1><p>fig-100和宽高不用同时设置，可以添加4个样式参数<span class="highlight-text primary">fancybox</span>、 <span class="highlight-text primary">nocaption</span> 、<span class="highlight-text primary">fig-50</span>、 <span class="highlight-text primary">clear</span>，<span class="highlight-text primary">fancybox</span>可以点击的Image、 <span class="highlight-text primary">nocaption</span>不显示Title、 <span class="highlight-text primary">fig-50</span>显示宽度的百分之50、 <span class="highlight-text primary">clear</span>可以换行，下表进行了详细说明。<br>    •    fancybox : Generate a fancybox image.<br>    •    nocaption : Caption of the image will not be displayed.<br>    •    left : Image will float at the left.<br>    •    right : Image will float at the right.<br>    •    center : Image will be at center.<br>    •    fig-20 : Image will take 20% of the width of post width and automatically float at left.<br>    •    fig-25 : Image will take 25% of the width of post width and automatically float at left.<br>    •    fig-33 : Image will take 33% of the width of post width and automatically float at left.<br>    •    fig-50 : Image will take 50% of the width of post width and automatically float at left.<br>    •    fig-75 : Image will take 75% of the width of post width and automatically float at left.<br>    •    fig-100 : Image will take 100% of the width of post width.<br>    •    clear : Add a div with clear:both; style attached after the image to retrieve the normal flow of the post.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Syntax : &#123;% image [classes] group:group-name /path/to/image [/path/to/thumbnail] [width of thumbnail] [height of thumbnail] [title text] %&#125;</div></pre></td></tr></table></figure>
+<div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div><div style="clear:both;"></div>
+<div class="figure nocaption fig-50" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="大好河山" data-caption="大好河山" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt="大好河山"></a></div>
+<div class="figure nocaption fig-50" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="大好河山" data-caption="大好河山" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt="大好河山"></a></div>
+<div class="figure nocaption fig-33" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="A beautiful sunrise3" data-caption="A beautiful sunrise3" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt="A beautiful sunrise3"></a></div>
+<div class="figure fig-33" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-33" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure right fig-75" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-50" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-25" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-10-17-123.png" alt=""></a></div>
+<div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-20" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-20" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-20" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-20" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div>
+<div class="figure fig-20" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" title="" data-caption="" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2243.jpg" alt=""></a></div><div style="clear:both;"></div>
+<h1 id="Wide-image"><a href="#Wide-image" class="headerlink" title="Wide image"></a>Wide image</h1><p>宽幅图像标签全宽显示宽幅图像。 它占用整个窗口宽度。 </p>
+</div><div class="figure figure--fullWidth"><img class="figure-img" src="https://d1u9biwaxjngwg.cloudfront.net/tag-plugins-showcase/car-1.jpg" alt="A beautiful sunrise"><span class="caption">A beautiful sunrise</span></div><div class="main-content-wrap">
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/MarkDown/">MarkDown</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/15/29740/" data-tooltip="代码高亮" aria-label="上一篇: 代码高亮">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/01/21/61733/" data-tooltip="学习笔记内容迁移" aria-label="下一篇: 学习笔记内容迁移">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/02/12068/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/02/12068/&amp;title=MarkDown基本用法和标签插件示例" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/02/12068/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/15/29740/" data-tooltip="代码高亮" aria-label="上一篇: 代码高亮">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/01/21/61733/" data-tooltip="学习笔记内容迁移" aria-label="下一篇: 学习笔记内容迁移">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/02/12068/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/02/12068/&amp;title=MarkDown基本用法和标签插件示例" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/02/12068/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/03/02/12068/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/03/02/12068/&amp;title=MarkDown基本用法和标签插件示例">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/03/02/12068/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2016/03/02/12068/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

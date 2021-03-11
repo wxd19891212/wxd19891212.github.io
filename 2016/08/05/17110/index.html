@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>SDWebImage 源码阅读记录（一） - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="近期公司项目用到SDWebImage（v3.8.2），来实现聊天图片的缓存，正好有时间，想好好研究下SDWebImage。本文是阅读网上许多关于SDWebImage文章加上个人理解写下的，也方便日后复习。">
+<meta name="keywords" content="源码阅读">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SDWebImage 源码阅读记录（一）">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2016/08/05/17110/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="近期公司项目用到SDWebImage（v3.8.2），来实现聊天图片的缓存，正好有时间，想好好研究下SDWebImage。本文是阅读网上许多关于SDWebImage文章加上个人理解写下的，也方便日后复习。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-15-SDWebImageSWDT.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageClassDiagram.png">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageSequenceDiagram.png">
+<meta property="og:updated_time" content="2018-05-10T03:19:50.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDWebImage 源码阅读记录（一）">
+<meta name="twitter:description" content="近期公司项目用到SDWebImage（v3.8.2），来实现聊天图片的缓存，正好有时间，想好好研究下SDWebImage。本文是阅读网上许多关于SDWebImage文章加上个人理解写下的，也方便日后复习。">
+<meta name="twitter:image" content="http://oxyk7k4jh.bkt.clouddn.com/2017-12-15-SDWebImageSWDT.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            SDWebImage 源码阅读记录（一）
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-08-05T17:00:32+08:00">
+	
+		    8月 05, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/SDWebImage/">SDWebImage</a>, <a class="category-link" href="/categories/SDWebImage/Github/">Github</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>近期公司项目用到SDWebImage（<a href="https://github.com/rs/SDWebImage/tree/3.8.2" target="_blank" rel="external">v3.8.2</a>），来实现聊天图片的缓存，正好有时间，想好好研究下SDWebImage。本文是阅读网上许多关于SDWebImage文章加上个人理解写下的，也方便日后复习。<br><a id="more"></a></p>
+<h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思维导图"><span class="toc-text">思维导图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码结构"><span class="toc-text">源码结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行流程"><span class="toc-text">运行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#核心方法的解析"><span class="toc-text">核心方法的解析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#完整核心方法注释"><span class="toc-text">完整核心方法注释</span></a></li></ol>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先老套路来介绍一下这个 SDWebImage 这个著名开源框架吧, 这个开源框架的主要作用就是:<br><div class="alert info no-icon"><p>Asynchronous image downloader with cache support with an UIImageView category.</p>
+</div></p>
+<p>一个异步下载图片并且支持缓存的 UIImageView 分类.就这么直译过来相信各位也能理解, 框架中最最常用的方法其实就是这个:<br><figure class="highlight objectivec"><figcaption><span>基本方法</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.imageView sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"url"</span>] placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</div></pre></td></tr></table></figure></p>
+<p>在看源码之前，先对思维导图、源码结构、运行流程先有个总体把握可以加深我们对后续代码的理解。</p>
+<h1 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h1><div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-15-SDWebImageSWDT.png" title="思维导图" data-caption="思维导图" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-15-SDWebImageSWDT.png" alt="思维导图"></a><span class="caption">思维导图</span></div><div style="clear:both;"></div>
+<h1 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h1><div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageClassDiagram.png" title="源码结构" data-caption="源码结构" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageClassDiagram.png" alt="源码结构"></a><span class="caption">源码结构</span></div><div style="clear:both;"></div>
+<p>源码结构图已经将这个框架是如何组织的基本展现出来, <code>UIImageView+WebCache</code> 和 <code>UIButton+WebCache</code> 直接为表层的 UIKit框架提供接口, 而 <code>SDWebImageManger</code> 负责处理和协调 <code>SDWebImageDownloader</code> 和 <code>SDWebImageCache</code>. 并与 UIKit 层进行交互, 而底层的一些类为更高层级的抽象提供支持.</p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><ul>
+<li>Downloader<ul>
+<li>SDWebImageDownloader</li>
+<li>SDWebImageDownloaderOperation</li>
+</ul>
+</li>
+<li>Cache<ul>
+<li>SDImageCache</li>
+</ul>
+</li>
+<li>Utils<ul>
+<li>SDWebImageManager</li>
+<li>SDWebImageDecoder</li>
+<li>SDWebImagePrefetcher</li>
+</ul>
+</li>
+<li>Categories<ul>
+<li>UIView+WebCacheOperation</li>
+<li>UIImageView+WebCache</li>
+<li>UIImageView+HighlightedWebCache</li>
+<li>UIButton+WebCache</li>
+<li>MKAnnotationView+WebCache</li>
+<li>NSData+ImageContentType</li>
+<li>UIImage+GIF</li>
+<li>UIImage+MultiFormat</li>
+<li>UIImage+WebP</li>
+</ul>
+</li>
+<li>Other<ul>
+<li>SDWebImageOperation（协议）</li>
+<li>SDWebImageCompat（宏定义、常量、通用函数）</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SDWebImageDownloader</code></td>
+<td>是专门用来下载图片和优化图片加载的，跟缓存没有关系</td>
+</tr>
+<tr>
+<td><code>SDWebImageDownloaderOperation</code></td>
+<td>继承于 <code>NSOperation</code>，用来处理下载任务的</td>
+</tr>
+<tr>
+<td><code>SDImageCache</code></td>
+<td>用来处理内存缓存和磁盘缓存（可选)的，其中磁盘缓存是异步进行的，因此不会阻塞主线程</td>
+</tr>
+<tr>
+<td><code>SDWebImageManager</code></td>
+<td>作为 <code>UIImageView+WebCache</code> 背后的默默付出者，主要功能是将图片下载（<code>SDWebImageDownloader</code>）和图片缓存（<code>SDImageCache</code>）两个独立的功能组合起来</td>
+</tr>
+<tr>
+<td><code>SDWebImageDecoder</code></td>
+<td>图片解码器，用于图片下载完成后进行解码</td>
+</tr>
+<tr>
+<td><code>SDWebImagePrefetcher</code></td>
+<td>预下载图片，方便后续使用，图片下载的优先级低，其内部由 <code>SDWebImageManager</code> 来处理图片下载和缓存</td>
+</tr>
+<tr>
+<td><code>UIView+WebCacheOperation</code></td>
+<td>用来记录图片加载的 operation，方便需要时取消和移除图片加载的 operation</td>
+</tr>
+<tr>
+<td><code>UIImageView+WebCache</code></td>
+<td>集成 <code>SDWebImageManager</code> 的图片下载和缓存功能到 <code>UIImageView</code> 的方法中，方便调用方的简单使用</td>
+</tr>
+<tr>
+<td><code>UIImageView+HighlightedWebCache</code></td>
+<td>跟 <code>UIImageView+WebCache</code> 类似，也是包装了 <code>SDWebImageManager</code>，只不过是用于加载 highlighted 状态的图片</td>
+</tr>
+<tr>
+<td><code>UIButton+WebCache</code></td>
+<td>跟 <code>UIImageView+WebCache</code> 类似，集成 <code>SDWebImageManager</code> 的图片下载和缓存功能到 <code>UIButton</code> 的方法中，方便调用方的简单使用</td>
+</tr>
+<tr>
+<td><code>MKAnnotationView+WebCache</code></td>
+<td>跟 UIImageView+WebCache 类似</td>
+</tr>
+<tr>
+<td><code>NSData+ImageContentType</code></td>
+<td>用于获取图片数据的格式（JPEG、PNG等）</td>
+</tr>
+<tr>
+<td><code>UIImage+GIF</code></td>
+<td>用于加载 GIF 动图</td>
+</tr>
+<tr>
+<td><code>UIImage+WebP</code></td>
+<td>用于解码并加载 WebP 图片</td>
+</tr>
+</tbody>
+</table>
+<h1 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h1><p>了解了工程目录结构之后，我们就可以看之前跳过的执行流程图了。<br><div class="figure fig-100" style="width:;"><a class="fancybox" href="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageSequenceDiagram.png" title="运行流程" data-caption="运行流程" data-fancybox="default" target="_blank" rel="external"><img class="fig-img" src="http://oxyk7k4jh.bkt.clouddn.com/2017-12-05-SDWebImageSequenceDiagram.png" alt="运行流程"></a><span class="caption">运行流程</span></div><div style="clear:both;"></div></p>
+<h1 id="核心方法的解析"><a href="#核心方法的解析" class="headerlink" title="核心方法的解析"></a>核心方法的解析</h1><p><code>SDWebImage</code> 的接口简单易用，开发者一句代码就能使用，代码： <code>- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;</code> ，复杂的逻辑和实现都被隐藏在这句代码的后面。各模块独立，Cache缓存模块提供库的内存缓存和可选的磁盘缓存支持，<code>Downloader</code>下载模块提供基于 <code>NSURLSession</code> 和<code>NSOperation</code> 的下载器。<code>SDWebImageManager</code> 则将 <code>Cache</code> 和 <code>Downloader</code> 两个模块很好的整合在一起，提供基于缓存的图片加载功能。最后是使用 <code>Categories</code> 封装了常用 UI 控件的接口。</p>
+<p>我们看UIImageView+WebCache.h文件,我们可以发现为开发者提供了很多类似于下面的这个方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder</div></pre></td></tr></table></figure></p>
+<p>这些方法最终都会调用<code>- sd_setImageWithURL: placeholderImage: options: progress: completed:</code>,这个方法可以算是核心方法,下面我们详细看一下内部实现 。</p>
+<p>代码的第一句是</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> sd_cancelCurrentImageLoad];</div></pre></td></tr></table></figure>
+<p>看方法名就知道它的作用，就是取消这个视图 ImageView 正在加载图片的操作，如果这个 ImageView 正在加载图片，保障在开始新的加载图片任务之前，取消掉正在进行的加载操作。</p>
+<p>看下具体的实现代码 <code>UIImageView+WebCache.m</code>：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)sd_cancelCurrentImageLoad &#123;</div><div class="line">    [<span class="keyword">self</span> sd_cancelImageLoadOperationWithKey:<span class="string">@"UIImageViewImageLoad"</span>];</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)sd_cancelCurrentAnimationImagesLoad &#123;</div><div class="line">    [<span class="keyword">self</span> sd_cancelImageLoadOperationWithKey:<span class="string">@"UIImageViewAnimationImages"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>两个 key 说明有两个不一样的加载方式，一个是单张图片的，另一个是连续下载多张，放到 <code>NSArray&lt;UIImage *&gt; *animationImages</code> 中。<br>看下取消操作的代码实现，<code>UIView+WebCacheOperation.m</code>:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSMutableDictionary</span> *)operationDictionary &#123;</div><div class="line">    <span class="built_in">NSMutableDictionary</span> *operations = objc_getAssociatedObject(<span class="keyword">self</span>, &amp;loadOperationKey);</div><div class="line">    <span class="keyword">if</span> (operations) &#123;</div><div class="line">        <span class="keyword">return</span> operations;</div><div class="line">    &#125;</div><div class="line">    operations = [<span class="built_in">NSMutableDictionary</span> dictionary];</div><div class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;loadOperationKey, operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line">    <span class="keyword">return</span> operations;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)sd_setImageLoadOperation:(<span class="keyword">id</span>)operation forKey:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line">    [<span class="keyword">self</span> sd_cancelImageLoadOperationWithKey:key];</div><div class="line">    <span class="built_in">NSMutableDictionary</span> *operationDictionary = [<span class="keyword">self</span> operationDictionary];</div><div class="line">    [operationDictionary setObject:operation forKey:key];</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)sd_cancelImageLoadOperationWithKey:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line">    <span class="comment">// Cancel in progress downloader from queue</span></div><div class="line">    <span class="built_in">NSMutableDictionary</span> *operationDictionary = [<span class="keyword">self</span> operationDictionary];</div><div class="line">    <span class="keyword">id</span> operations = [operationDictionary objectForKey:key];</div><div class="line">    <span class="keyword">if</span> (operations) &#123;</div><div class="line">        <span class="keyword">if</span> ([operations isKindOfClass:[<span class="built_in">NSArray</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation <span class="keyword">in</span> operations) &#123;</div><div class="line">                <span class="keyword">if</span> (operation) &#123;</div><div class="line">                    [operation cancel];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([operations conformsToProtocol:<span class="class"><span class="keyword">@protocol</span>(<span class="title">SDWebImageOperation</span>)])</span>&#123;</div><div class="line">            [(<span class="keyword">id</span>&lt;SDWebImageOperation&gt;) operations cancel];</div><div class="line">        &#125;</div><div class="line">        [operationDictionary removeObjectForKey:key];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码中，通过 <code>objc_setAssociatedObject</code>  关联对象的方法，给 <code>UIImageView</code> 动态添加了一个 <code>NSMutableDictionary</code>  的属性。通过 key-value 维护这个 <code>ImageView</code> 已经有了哪些下载操作，如果是数组就是 <code>UIImageViewAnimationImages</code> 否则就是 <code>UIImageViewImageLoad</code> 。最后获得的都是遵从了 <code>&lt;SDWebImageOperation&gt;</code> 协议的对象，可以统一调用定义好的方法 cancel，达到取消下载操作的目的，如果 operation 都被取消了，则删除对应 key 的值。<br>继续看 <code>- (void)sd_setImageWithURL: placeholderImage: options: ;</code> 里的代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!(options &amp; SDWebImageDelayPlaceholder)) &#123;</div><div class="line">    dispatch_main_async_safe(^&#123;</div><div class="line">        <span class="keyword">self</span>.image = placeholder;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果加载图片的选项不是 <code>SDWebImageDelayPlaceholder</code> 则会在主线程中先设置 placeholder 的占位图，<br><code>SDWebImageDelayPlaceholder</code> 的情况后面说。<code>dispatch_main_async_safe</code> 是一个宏定义，点进去一看发现宏是这样定义的</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#define dispatch_main_sync_safe(block)\</span></div><div class="line">    <span class="keyword">if</span> ([<span class="built_in">NSThread</span> isMainThread]) &#123;\</div><div class="line">        block();\</div><div class="line">    &#125; <span class="keyword">else</span> &#123;\</div><div class="line">        <span class="built_in">dispatch_sync</span>(dispatch_get_main_queue(), block);\</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>相信这个宏的名字已经讲他的作用解释的很清楚了: 因为图像的绘制只能在主线程完成, 所以, <code>dispatch_main_sync_safe</code> 就是为了保证 <code>block</code> 能在主线程中执行.</p>
+<p>下面这段就是这个类中比较关键的代码了</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (url) &#123;</div><div class="line"></div><div class="line">        <span class="comment">// check if activityView is enabled or not</span></div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> showActivityIndicatorView]) &#123;</div><div class="line">            [<span class="keyword">self</span> addActivityIndicator];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        __<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>)wself = <span class="keyword">self</span>;</div><div class="line">        <span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL) &#123;</div><div class="line">            [wself removeActivityIndicator];</div><div class="line">            <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</div><div class="line">            dispatch_main_sync_safe(^&#123;</div><div class="line">                <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</div><div class="line">                <span class="keyword">if</span> (image &amp;&amp; (options &amp; SDWebImageAvoidAutoSetImage) &amp;&amp; completedBlock)</div><div class="line">                &#123;</div><div class="line">                    completedBlock(image, error, cacheType, url);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (image) &#123;</div><div class="line">                    wself.image = image;</div><div class="line">                    [wself setNeedsLayout];</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">if</span> ((options &amp; SDWebImageDelayPlaceholder)) &#123;</div><div class="line">                        wself.image = placeholder;</div><div class="line">                        [wself setNeedsLayout];</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (completedBlock &amp;&amp; finished) &#123;</div><div class="line">                    completedBlock(image, error, cacheType, url);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;];</div><div class="line">        [<span class="keyword">self</span> sd_setImageLoadOperation:operation forKey:<span class="string">@"UIImageViewImageLoad"</span>];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        dispatch_main_async_safe(^&#123;</div><div class="line">            [<span class="keyword">self</span> removeActivityIndicator];</div><div class="line">            <span class="keyword">if</span> (completedBlock) &#123;</div><div class="line">                <span class="built_in">NSError</span> *error = [<span class="built_in">NSError</span> errorWithDomain:SDWebImageErrorDomain code:<span class="number">-1</span> userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Trying to load a nil url"</span>&#125;];</div><div class="line">                completedBlock(<span class="literal">nil</span>, error, SDImageCacheTypeNone, url);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>先检查 activityView 是否可用，可用的话给 ImageView 正中间添加一个活动指示器，并旋转，加载图片完成或失败都会清除掉。<code>__weak __typeof(self)wself = self;</code> 避免循环引用，接下来就是调用 <code>SDWebImageManager</code> 的方法 <code>downloadImageWithURL: options: progress: completed:</code>  ，在该方法的 completed  block 回调中，如果 option 是 <code>SDWebImageAvoidAutoSetImage</code> ，就是要求不要给 ImageView 自动设置图片，则只回调 completedBlock 然后 return，否则有 image 就设置给 ImageView 。没有 image 通常就是错误情况，如果 option 是 <code>SDWebImageDelayPlaceholder</code> 则设置占位图（可以设置成提示用户图片没加载出来的图片），最后回调 completedBlock。上面代码最后一句是把这个 operation 存到 ImageView 的 <code>NSMutableDictionary</code> 中，为了之前提到的 <code>[self sd_cancelCurrentImageLoad];</code>  操作准备的。</p>
+<h1 id="完整核心方法注释"><a href="#完整核心方法注释" class="headerlink" title="完整核心方法注释"></a>完整核心方法注释</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url</div><div class="line">          placeholderImage:(<span class="built_in">UIImage</span> *)placeholder</div><div class="line">                   options:(SDWebImageOptions)options</div><div class="line">                  progress:(SDWebImageDownloaderProgressBlock)progressBlock </div><div class="line">completed:(SDWebImageCompletionBlock)completedBlock &#123;</div><div class="line">    [<span class="keyword">self</span> sd_cancelCurrentImageLoad];</div><div class="line">    <span class="comment">//将 url作为属性绑定到ImageView上,用static char imageURLKey作key</span></div><div class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line"></div><div class="line"><span class="comment">/*options &amp; SDWebImageDelayPlaceholder这是一个位运算的与操作,!(options &amp; SDWebImageDelayPlaceholder)的意思就是options参数不是SDWebImageDelayPlaceholder,就执行以下操作   </span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">#define dispatch_main_async_safe(block)\</span></div><div class="line"><span class="comment">    if ([NSThread isMainThread]) &#123;\</span></div><div class="line"><span class="comment">        block();\</span></div><div class="line"><span class="comment">    &#125; else &#123;\</span></div><div class="line"><span class="comment">        dispatch_async(dispatch_get_main_queue(), block);\</span></div><div class="line"><span class="comment">    &#125;</span></div><div class="line"><span class="comment">*/</span></div><div class="line">这是一个宏定义,因为图像的绘制只能在主线程完成,所以dispatch_main_sync_safe就是为了保证block在主线程中执行</div><div class="line"> <span class="keyword">if</span> (!(options &amp; SDWebImageDelayPlaceholder)) &#123;</div><div class="line">        dispatch_main_async_safe(^&#123;</div><div class="line"><span class="comment">//设置imageView的placeHolder</span></div><div class="line">            <span class="keyword">self</span>.image = placeholder;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (url) &#123;</div><div class="line"></div><div class="line">        <span class="comment">// 检查是否通过`setShowActivityIndicatorView:`方法设置了显示正在加载指示器。如果设置了，使用`addActivityIndicator`方法向self添加指示器</span></div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span> showActivityIndicatorView]) &#123;</div><div class="line">            [<span class="keyword">self</span> addActivityIndicator];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        __<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>)wself = <span class="keyword">self</span>;</div><div class="line"><span class="comment">//下载的核心方法</span></div><div class="line">        <span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options </div><div class="line">progress:progressBlock completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL) &#123;</div><div class="line">          <span class="comment">//移除加载指示器</span></div><div class="line">            [wself removeActivityIndicator];</div><div class="line">          <span class="comment">//如果imageView不存在了就return停止操作</span></div><div class="line">            <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</div><div class="line">            dispatch_main_sync_safe(^&#123;</div><div class="line">                <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">SDWebImageAvoidAutoSetImage,默认情况下图片会在下载完毕后自动添加给imageView,但是有些时候我们想在设置图片之前加一些图片的处理,就要下载成功后去手动设置图片了,不会执行`wself.image = image;`,而是直接执行完成回调，有用户自己决定如何处理。</span></div><div class="line"><span class="comment">*/</span></div><div class="line">                <span class="keyword">if</span> (image &amp;&amp; (options &amp; SDWebImageAvoidAutoSetImage) &amp;&amp; completedBlock)</div><div class="line">                &#123;</div><div class="line">                    completedBlock(image, error, cacheType, url);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">如果后两个条件中至少有一个不满足，那么就直接将image赋给当前的imageView</span></div><div class="line"><span class="comment">，并调用setNeedsLayout</span></div><div class="line"><span class="comment">*/</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (image) &#123;</div><div class="line">                    wself.image = image;</div><div class="line">                    [wself setNeedsLayout];</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">image为空，并且设置了延迟设置占位图，会将占位图设置为最终的image，，并将其标记为需要重新布局。</span></div><div class="line"><span class="comment">  */</span></div><div class="line">                    <span class="keyword">if</span> ((options &amp; SDWebImageDelayPlaceholder)) &#123;</div><div class="line">                        wself.image = placeholder;</div><div class="line">                        [wself setNeedsLayout];</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (completedBlock &amp;&amp; finished) &#123;</div><div class="line">                    completedBlock(image, error, cacheType, url);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;];</div><div class="line"> <span class="comment">// 为UIImageView绑定新的操作,以为之前把ImageView的操作cancel了</span></div><div class="line">        [<span class="keyword">self</span> sd_setImageLoadOperation:operation forKey:<span class="string">@"UIImageViewImageLoad"</span>];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line"> <span class="comment">// 判断url不存在，移除加载指示器，执行完成回调，传递错误信息。</span></div><div class="line">        dispatch_main_async_safe(^&#123;</div><div class="line">            [<span class="keyword">self</span> removeActivityIndicator];</div><div class="line">            <span class="keyword">if</span> (completedBlock) &#123;</div><div class="line">                <span class="built_in">NSError</span> *error = [<span class="built_in">NSError</span> errorWithDomain:SDWebImageErrorDomain code:<span class="number">-1</span> userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Trying to load a nil url"</span>&#125;];</div><div class="line">                completedBlock(<span class="literal">nil</span>, error, SDImageCacheTypeNone, url);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>UIImageView+WebCache</code> 类中的代码还是很容易的，逻辑很清晰，没有难懂的地方。请接着下篇 <a href="/2016/08/10/34027/">SDWebImageManager 源码阅读记录（二）</a> 将<code>SDWebImageManager</code>解析核心方法：</p>
+<p>相关阅读：<br><a href="/2016/08/05/17110/">SDWebImage 源码阅读记录（一）</a><br><a href="/2016/08/10/34027/">SDWebImageManager 源码阅读记录（二）</a><br><a href="/2016/08/14/18664/">SDWebImageDownloader 源码阅读记录（三）</a><br><a href="/2016/08/20/56144/">SDWebImageDownloaderOperation 源码阅读记录（四）</a><br><a href="/2016/08/26/28513/">SDWebImageCache 源码阅读记录（五）</a><br><a href="/2016/08/30/9908/">SDWebImage相关类 源码阅读记录（六）</a></p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/源码阅读/">源码阅读</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/10/34027/" data-tooltip="SDWebImageManager 源码阅读记录（二）" aria-label="上一篇: SDWebImageManager 源码阅读记录（二）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/10/36425/" data-tooltip="多线程学习总结（GCD，NSOperation）" aria-label="下一篇: 多线程学习总结（GCD，NSOperation）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/05/17110/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/05/17110/&amp;title=SDWebImage 源码阅读记录（一）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/05/17110/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/10/34027/" data-tooltip="SDWebImageManager 源码阅读记录（二）" aria-label="上一篇: SDWebImageManager 源码阅读记录（二）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/10/36425/" data-tooltip="多线程学习总结（GCD，NSOperation）" aria-label="下一篇: 多线程学习总结（GCD，NSOperation）">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/05/17110/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/05/17110/&amp;title=SDWebImage 源码阅读记录（一）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/05/17110/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2016/08/05/17110/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2016/08/05/17110/&amp;title=SDWebImage 源码阅读记录（一）">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2016/08/05/17110/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2016/08/05/17110/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>

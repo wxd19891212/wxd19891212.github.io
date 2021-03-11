@@ -1,0 +1,889 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="XiaoDong">
+    <title>iOS Runtime 学习总结（附Demo） - XiaoDong</title>
+    <meta name="author" content="XiaoDong Wang">
+    
+    
+        <link rel="icon" href="http://blog.xiaodongwang.com/assets/images/bitbug_favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。了解 Runtime ，要先了解它的核心 - 消息传递 （Messaging）。">
+<meta name="keywords" content="运行时,Runtime">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS Runtime 学习总结（附Demo）">
+<meta property="og:url" content="http://blog.xiaodongwang.com/2017/09/14/522/index.html">
+<meta property="og:site_name" content="XiaoDong">
+<meta property="og:description" content="Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。了解 Runtime ，要先了解它的核心 - 消息传递 （Messaging）。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://oxyk7k4jh.bkt.clouddn.com/2018-05-14-301129-cc9c0a7ffb147fed.png">
+<meta property="og:updated_time" content="2018-05-17T12:18:06.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Runtime 学习总结（附Demo）">
+<meta name="twitter:description" content="Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。了解 Runtime ，要先了解它的核心 - 消息传递 （Messaging）。">
+<meta name="twitter:image" content="http://oxyk7k4jh.bkt.clouddn.com/2018-05-14-301129-cc9c0a7ffb147fed.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://blog.xiaodongwang.com/assets/images/WechatIMG72.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-bof0arfuf492d2ojltoawpmiirc6dutqwguvrg4y85i6km7st1t5r7xltp0f.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c7edef1c5ae1081f28fb9efbf5d633ab";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">XiaoDong</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">XiaoDong Wang</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/wxd19891212" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:job@xiaodongwang.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS Runtime 学习总结（附Demo）
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-09-14T23:14:32+08:00">
+	
+		    9月 14, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/DataCache/">DataCache</a>, <a class="category-link" href="/categories/DataCache/iOS/">iOS</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。了解 Runtime ，要先了解它的核心 - 消息传递 （Messaging）。<br><a id="more"></a><br><h1 id="table-of-contents">目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#消息传递（Messaging）"><span class="toc-text">消息传递（Messaging）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#objc-object-objc-class-以及-Ojbc-method"><span class="toc-text">objc_object, objc_class 以及 Ojbc_method</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类对象-objc-class"><span class="toc-text">类对象(objc_class)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例-objc-object"><span class="toc-text">实例(objc_object)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元类-Meta-Class"><span class="toc-text">元类(Meta Class)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-objc-method"><span class="toc-text">Method(objc_method)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SEL-objc-selector"><span class="toc-text">SEL(objc_selector)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMP"><span class="toc-text">IMP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类缓存-objc-cache"><span class="toc-text">类缓存(objc_cache)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Category-objc-category"><span class="toc-text">Category(objc_category)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态方法解析和转发"><span class="toc-text">动态方法解析和转发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-Resolution"><span class="toc-text">Method Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-forwarding"><span class="toc-text">Fast forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal-forwarding"><span class="toc-text">Normal forwarding</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method-Swizzling和AOP"><span class="toc-text">Method Swizzling和AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Aspect-Oriented-Programming-（面向切面编程）"><span class="toc-text">Aspect Oriented Programming （面向切面编程）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后"><span class="toc-text">最后</span></a></li></ol></p>
+<h1 id="消息传递（Messaging）"><a href="#消息传递（Messaging）" class="headerlink" title="消息传递（Messaging）"></a>消息传递（Messaging）</h1><p>在很多语言，比如 C ，调用一个方法其实就是跳到内存中的某一点并开始执行一段代码。没有任何动态的特性，因为这在编译时就决定好了。而在 Objective-C 中，[object foo] 语法并不会立即执行 foo 这个方法的代码。它是在运行时给 object 发送一条叫 foo 的消息。这个消息，也许会由 object 来处理，也许会被转发给另一个对象，或者不予理睬假装没收到这个消息。多条不同的消息也可以对应同一个方法实现。这些都是在程序运行的时候决定的。</p>
+<p>事实上，在编译时你写的 Objective-C 函数调用的语法都会被翻译成一个 C 的函数调用 - objc_msgSend() 。比如，下面两行代码就是等价的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[array insertObject:foo atIndex:<span class="number">5</span>];</div><div class="line">objc_msgSend(array, <span class="keyword">@selector</span>(insertObject:atIndex:), foo, <span class="number">5</span>);</div></pre></td></tr></table></figure>
+<p>消息传递的关键藏于 objc_object 中的 isa 指针和 objc_class 中的 class dispatch table。</p>
+<h1 id="objc-object-objc-class-以及-Ojbc-method"><a href="#objc-object-objc-class-以及-Ojbc-method" class="headerlink" title="objc_object, objc_class 以及 Ojbc_method"></a>objc_object, objc_class 以及 Ojbc_method</h1><p>在 Objective-C 中，类、对象和方法都是一个 C 的结构体，从 objc/objc.h 头文件中，我们可以找到他们的定义：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_object &#123;  </div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">struct</span> objc_class &#123;  </div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line"><span class="meta">#if !__OBJC2__</span></div><div class="line">    Class super_class;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</div><div class="line">    <span class="keyword">long</span> version;</div><div class="line">    <span class="keyword">long</span> info;</div><div class="line">    <span class="keyword">long</span> instance_size;</div><div class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars;</div><div class="line">    **<span class="keyword">struct</span> objc_method_list **methodLists**;</div><div class="line">    **<span class="keyword">struct</span> objc_cache *cache**;</div><div class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols;</div><div class="line"><span class="meta">#endif</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">struct</span> objc_method_list &#123;  </div><div class="line">    <span class="keyword">struct</span> objc_method_list *obsolete;</div><div class="line">    <span class="keyword">int</span> method_count;</div><div class="line"><span class="meta">#ifdef __LP64__</span></div><div class="line">    <span class="keyword">int</span> space;</div><div class="line"><span class="meta">#endif</span></div><div class="line">    <span class="comment">/* variable length structure */</span></div><div class="line">    <span class="keyword">struct</span> objc_method method_list[<span class="number">1</span>];</div><div class="line">&#125;;</div><div class="line"><span class="keyword">struct</span> objc_method &#123;  </div><div class="line">    SEL method_name;</div><div class="line">    <span class="keyword">char</span> *method_types;    <span class="comment">/* a string representing argument/return types */</span></div><div class="line">    IMP method_imp;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>objc_method_list 本质是一个有 objc_method 元素的可变长度的数组。一个 objc_method 结构体中有函数名，也就是SEL，有表示函数类型的字符串 (见 Type Encoding) ，以及函数的实现IMP。</p>
+<p>从这些定义中可以看出发送一条消息也就 objc_msgSend 做了什么事。举 objc_msgSend(obj, testMethod) 这个例子来说：</p>
+<p>1.首先，通过 obj 的 isa 指针找到它的 class ;//找到类对象<br>2.在 class 的 method list 找 testMethod ;<br>3.如果 class 中没到 testMethod，继续往它的 superclass 中找 ;<br>4.一旦找到 testMethod 这个函数，就去执行它的实现IMP .<br>5.转发IMP的return值</p>
+<p>但这种实现有个问题，效率低。但一个 class 往往只有 20% 的函数会被经常调用，可能占总调用次数的 80% 。每个消息都需要遍历一次 objc_method_list 并不合理。如果把经常被调用的函数缓存下来，那可以大大提高函数查询的效率。这也就是 objc_class 中另一个重要成员 objc_cache 做的事情 - 再找到 testMethod 之后，把 testMethod 的 method_name 作为 key ，method_imp 作为 value 给存起来。当再次收到 testMethod 消息的时候，可以直接在 cache 里找到，避免去遍历 objc_method_list.</p>
+<p>下面讲讲消息传递用到的一些概念：</p>
+<ul>
+<li>类对象(objc_class)</li>
+<li>实例(objc_object)</li>
+<li>类(Meta Class)</li>
+<li>Method(objc_method)</li>
+<li>SEL(objc_selector)</li>
+<li>IMP</li>
+<li>类缓存(objc_cache)</li>
+<li>Category(objc_category)</li>
+</ul>
+<h2 id="类对象-objc-class"><a href="#类对象-objc-class" class="headerlink" title="类对象(objc_class)"></a>类对象(objc_class)</h2><p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</div></pre></td></tr></table></figure>
+<p>struct objc_class结构体定义了很多变量，通过命名不难发现，<br>结构体里保存了指向父类的指针、类的名字、版本、实例大小、实例变量列表、方法列表、缓存、遵守的协议列表等，<br>一个类包含的信息也不就正是这些吗？没错，类对象就是一个结构体struct objc_class，这个结构体存放的数据称为元数据(metadata)，<br>该结构体的第一个成员变量也是isa指针，这就说明了Class本身其实也是一个对象，因此我们称之为类对象，类对象在编译期产生用于创建实例对象，是单例。</p>
+<h2 id="实例-objc-object"><a href="#实例-objc-object" class="headerlink" title="实例(objc_object)"></a>实例(objc_object)</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// Represents an instance of a class. </span></div><div class="line"><span class="keyword">struct</span> objc_object &#123; </div><div class="line">	Class isa OBJC_ISA_AVAILABILITY; </div><div class="line">&#125;; </div><div class="line"><span class="comment">/// A pointer to an instance of a class. </span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</div></pre></td></tr></table></figure>
+<p>类对象中的元数据存储的都是如何创建一个实例的相关信息，那么类对象和类方法应该从哪里创建呢？<br>就是从isa指针指向的结构体创建，类对象的isa指针指向的我们称之为元类(metaclass)，<br>元类中保存了创建类对象以及类方法所需的所有信息，因此整个结构应该如下图所示:</p>
+<p><img src="http://oxyk7k4jh.bkt.clouddn.com/2018-05-14-301129-cc9c0a7ffb147fed.png" alt="结构"></p>
+<h2 id="元类-Meta-Class"><a href="#元类-Meta-Class" class="headerlink" title="元类(Meta Class)"></a>元类(Meta Class)</h2><p>通过上图我们可以看出整个体系构成了一个自闭环，struct objc_object结构体实例它的isa指针指向类对象，类对象的isa指针指向了元类，super_class指针指向了父类的类对象，而元类的super_class指针指向了父类的元类，那元类的isa指针又指向了自己。</p>
+<p>元类(Meta Class)是一个类对象的类。在上面我们提到，所有的类自身也是一个对象，我们可以向这个对象发送消息(即调用类方法)。为了调用类方法，这个类的isa指针必须指向一个包含这些类方法的一个objc_class结构体。这就引出了meta-class的概念，元类中保存了创建类对象以及类方法所需的所有信息。</p>
+<p>任何NSObject继承体系下的meta-class都使用NSObject的meta-class作为自己的所属类，而基类的meta-class的isa指针是指向它自己。</p>
+<h2 id="Method-objc-method"><a href="#Method-objc-method" class="headerlink" title="Method(objc_method)"></a>Method(objc_method)</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">runtime.h</div><div class="line"><span class="comment">/// An opaque type that represents a method in a class definition.代表类定义中一个方法的不透明类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_method *Method;</div><div class="line"><span class="keyword">struct</span> objc_method &#123;</div><div class="line">   SEL method_name                                          OBJC2_UNAVAILABLE;<span class="comment">//方法名</span></div><div class="line">   <span class="keyword">char</span> *method_types                                       OBJC2_UNAVAILABLE;<span class="comment">//方法类型</span></div><div class="line">   IMP method_imp                                           OBJC2_UNAVAILABLE;<span class="comment">//方法实现</span></div></pre></td></tr></table></figure>
+<p>在这个结构体中，我们已经看到了SEL和IMP，说明SEL和IMP其实都是Method的属性。</p>
+<h3 id="SEL-objc-selector"><a href="#SEL-objc-selector" class="headerlink" title="SEL(objc_selector)"></a>SEL(objc_selector)</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Objc.h</div><div class="line"><span class="comment">/// An opaque type that represents a method selector.代表一个方法的不透明类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_selector *SEL;</div></pre></td></tr></table></figure>
+<p>objc_msgSend函数第二个参数类型为SEL，它是selector在Objective-C中的表示类型（Swift中是Selector类）。selector是方法选择器，可以理解为区分方法的 ID，而这个 ID 的数据结构是SEL:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> SEL selector;</div></pre></td></tr></table></figure>
+<p>可以看到selector是SEL的一个实例。</p>
+<blockquote>
+<p>A method selector is a C string that has been registered (or “mapped“) with the Objective-C runtime. Selectors generated by the compiler are automatically mapped by the runtime when the class is loaded.</p>
+</blockquote>
+<p>其实selector就是个映射到方法的C字符串，你可以用 Objective-C 编译器命令@selector()或者 Runtime 系统的sel_registerName函数来获得一个 SEL 类型的方法选择器。</p>
+<p>selector既然是一个string，我觉得应该是类似className+method的组合，命名规则有两条：</p>
+<ul>
+<li>同一个类，selector不能重复</li>
+<li>不同的类，selector可以重复</li>
+</ul>
+<p>这也带来了一个弊端，我们在写C代码的时候，经常会用到函数重载，就是函数名相同，参数不同，但是这在Objective-C中是行不通的，因为selector只记了method的name，没有参数，所以没法区分不同的method。</p>
+<p>在不同类中相同名字的方法所对应的方法选择器是相同的，即使方法名字相同而变量类型不同也会导致它们具有相同的方法选择器。</p>
+<h3 id="IMP"><a href="#IMP" class="headerlink" title="IMP"></a>IMP</h3><p>就是指向最终实现程序的内存地址的指针。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// A pointer to the function of a method implementation.  指向一个方法实现的指针</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">id</span> (*IMP)(<span class="keyword">id</span>, SEL, ...); </div><div class="line"><span class="meta">#endif</span></div></pre></td></tr></table></figure></p>
+<p>在iOS的Runtime中，Method通过selector和IMP两个属性，实现了快速查询方法及实现，相对提高了性能，又保持了灵活性。</p>
+<h2 id="类缓存-objc-cache"><a href="#类缓存-objc-cache" class="headerlink" title="类缓存(objc_cache)"></a>类缓存(objc_cache)</h2><p>当Objective-C运行时通过跟踪它的isa指针检查对象时，它可以找到一个实现许多方法的对象。然而，你可能只调用它们的一小部分，并且每次查找时，搜索所有选择器的类分派表没有意义。所以类实现一个缓存，每当你搜索一个类分派表，并找到相应的选择器，它把它放入它的缓存。所以当objc_msgSend查找一个类的选择器，它首先搜索类缓存。这是基于这样的理论：如果你在类上调用一个消息，你可能以后再次调用该消息。</p>
+<p>为了加速消息分发， 系统会对方法和对应的地址进行缓存，就放在上述的objc_cache，所以在实际运行中，大部分常用的方法都是会被缓存起来的，Runtime系统实际上非常快，接近直接执行内存地址的程序速度。</p>
+<h2 id="Category-objc-category"><a href="#Category-objc-category" class="headerlink" title="Category(objc_category)"></a>Category(objc_category)</h2><p>Category是表示一个指向分类的结构体的指针，其定义如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> category_t &#123;</div><div class="line">   <span class="keyword">const</span> <span class="keyword">char</span> *name;<span class="comment">//是指 class_name 而不是 category_name。</span></div><div class="line">   classref_t cls;<span class="comment">//要扩展的类对象，编译期间是不会定义的，而是在Runtime阶段通过name对 应到对应的类对象。</span></div><div class="line">   <span class="keyword">struct</span> method_list_t *instanceMethods;<span class="comment">//category中所有给类添加的实例方法的列表</span></div><div class="line">   <span class="keyword">struct</span> method_list_t *classMethods;<span class="comment">//category中所有添加的类方法的列表。</span></div><div class="line">   <span class="keyword">struct</span> protocol_list_t *protocols;<span class="comment">//category实现的所有协议的列表</span></div><div class="line">   <span class="keyword">struct</span> property_list_t *instanceProperties;<span class="comment">//表示Category里所有的properties，这就是我们可以通过objc_setAssociatedObject和objc_getAssociatedObject增加实例变量的原因，不过这个和一般的实例变量是不一样的。</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>从上面的category_t的结构体中可以看出，分类中可以添加实例方法，类方法，甚至可以实现协议，添加属性，不可以添加成员变量。</p>
+<h1 id="动态方法解析和转发"><a href="#动态方法解析和转发" class="headerlink" title="动态方法解析和转发"></a>动态方法解析和转发</h1><p>在上面的例子中，如果 testMethod 没有找到会发生什么？通常情况下，程序会在运行时挂掉并抛出 unrecognized selector sent to … 的异常。但在异常抛出前，Objective-C 的运行时会给你三次拯救程序的机会：</p>
+<p>1.Method resolution<br>2.Fast forwarding<br>3.Normal forwarding</p>
+<p>首先，Objective-C 运行时会调用 <code>+resolveInstanceMethod:</code> 或者 <code>+resolveClassMethod:</code>，让你有机会提供一个函数实现。如果你添加了函数并返回 YES， 那运行时系统就会重新启动一次消息发送的过程。还是以 testMethod 为例，你可以这么实现：</p>
+<h2 id="Method-Resolution"><a href="#Method-Resolution" class="headerlink" title="Method Resolution"></a>Method Resolution</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">void</span> testMethodIMP(<span class="keyword">id</span> obj, SEL _cmd)&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Doing testMethod"</span>);<span class="comment">//新的testMethod函数</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">BOOL</span>)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">     <span class="keyword">if</span> (sel == <span class="keyword">@selector</span>(testMethod:)) &#123;</div><div class="line">     <span class="comment">//https://www.jianshu.com/p/54c190542aa8  为什么object_getClass(obj)与[OBJ class]返回的指针不同</span></div><div class="line">     </div><div class="line">     Class _clsA = object_getClass(<span class="keyword">self</span>);<span class="comment">//返回isa指针</span></div><div class="line">     Class _clsB = [<span class="keyword">self</span> <span class="keyword">class</span>];<span class="comment">//返回自己</span></div><div class="line">     <span class="keyword">const</span> <span class="keyword">char</span> *types = <span class="keyword">@encode</span>(<span class="keyword">typeof</span>(<span class="keyword">@selector</span>(testMethod:)));</div><div class="line">     class_addMethod([<span class="keyword">self</span> <span class="keyword">class</span>], sel, (IMP)testMethodIMP, types);</div><div class="line">     <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> [<span class="keyword">super</span> resolveInstanceMethod:sel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果 resolve 方法返回 NO ，运行时就会移到下一步：消息转发（Message Forwarding）。</p>
+<h2 id="Fast-forwarding"><a href="#Fast-forwarding" class="headerlink" title="Fast forwarding"></a>Fast forwarding</h2><p>如果目标对象实现了 <code>-forwardingTargetForSelector:</code> ，Runtime 这时就会调用这个方法，给你把这个消息转发给其他对象的机会。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector &#123;</div><div class="line">     <span class="keyword">if</span> (aSelector == <span class="keyword">@selector</span>(testMethod:)) &#123;</div><div class="line">     <span class="keyword">return</span> [Person new];<span class="comment">//返回Person对象，让Person对象接收这个消息</span></div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> [<span class="keyword">super</span> forwardingTargetForSelector:aSelector];</div><div class="line">     </div><div class="line">    <span class="comment">//return nil;//返回nil，进入下一步转发</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只要这个方法返回的不是 nil 和 self，整个消息发送的过程就会被重启，当然发送的对象会变成你返回的那个对象。否则，就会继续 Normal Fowarding 。</p>
+<p>这里叫 Fast ，只是为了区别下一步的转发机制。因为这一步不会创建任何新的对象，但下一步转发会创建一个 NSInvocation 对象，所以相对更快点。</p>
+<h2 id="Normal-forwarding"><a href="#Normal-forwarding" class="headerlink" title="Normal forwarding"></a>Normal forwarding</h2><p>这一步是 Runtime 最后一次给你挽救的机会。首先它会发送 <code>-methodSignatureForSelector:</code> 消息获得函数的参数和返回值类型。如果 <code>-methodSignatureForSelector:</code> 返回 nil ，Runtime 则会发出 <code>-doesNotRecognizeSelector:</code> 消息，程序这时也就挂掉了。如果返回了一个函数签名，Runtime 就会创建一个 NSInvocation 对象并发送 <code>-forwardInvocation:</code> 消息给目标对象。</p>
+<p>NSInvocation 实际上就是对一个消息的描述，包括selector 以及参数等信息。所以你可以在 <code>-forwardInvocation:</code> 里修改传进来的 NSInvocation 对象，然后发送 <code>-invokeWithTarget:</code> 消息给它，传进去一个新的目标：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)aSelector &#123;</div><div class="line">    <span class="keyword">if</span> (aSelector == <span class="keyword">@selector</span>(testMethod:)) &#123;</div><div class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *types = method_getTypeEncoding(class_getInstanceMethod(object_getClass([Person new]), <span class="keyword">@selector</span>(testMethod:)));</div><div class="line">        <span class="keyword">return</span> [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:types];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> methodSignatureForSelector:aSelector];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation &#123;</div><div class="line">    SEL sel = anInvocation.selector;</div><div class="line">    Person *p = [Person new];</div><div class="line">    <span class="keyword">if</span> ([p respondsToSelector:sel]) &#123;</div><div class="line">        [anInvocation invokeWithTarget:p];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        [<span class="keyword">self</span> doesNotRecognizeSelector:sel];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Cocoa 里很多地方都利用到了消息传递机制来对语言进行扩展，如 Proxies、NSUndoManager 跟 Responder Chain。NSProxy 就是专门用来作为代理转发消息的；NSUndoManager 截取一个消息之后再发送；而 Responder Chain 保证一个消息转发给合适的响应者。</p>
+<h1 id="Method-Swizzling和AOP"><a href="#Method-Swizzling和AOP" class="headerlink" title="Method Swizzling和AOP"></a>Method Swizzling和AOP</h1><p>下面实现一个替换ViewController的viewDidLoad方法的例子</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">void</span>)load &#123;</div><div class="line">     <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">     <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">     Class <span class="keyword">class</span> = [<span class="keyword">self</span> <span class="keyword">class</span>];</div><div class="line">     <span class="comment">//SEL originalSelector = @selector(viewDidLoad);</span></div><div class="line">     SEL originalSelector = <span class="keyword">@selector</span>(viewDidLoad);</div><div class="line">     SEL swizzledSelector = <span class="keyword">@selector</span>(wxdViewDidLoad);</div><div class="line">     Method originalMethod = class_getInstanceMethod(<span class="keyword">class</span>, originalSelector);</div><div class="line">     Method swizzledMethod = class_getInstanceMethod(<span class="keyword">class</span>, swizzledSelector);</div><div class="line">     </div><div class="line">     <span class="built_in">BOOL</span> didAddMethod = class_addMethod(<span class="keyword">class</span>, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</div><div class="line">     <span class="keyword">if</span> (didAddMethod) &#123;</div><div class="line">     class_replaceMethod(<span class="keyword">class</span>, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">else</span> &#123;</div><div class="line">     method_exchangeImplementations(originalMethod, swizzledMethod);</div><div class="line">     &#125;</div><div class="line">     &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Aspect-Oriented-Programming-（面向切面编程）"><a href="#Aspect-Oriented-Programming-（面向切面编程）" class="headerlink" title="Aspect Oriented Programming （面向切面编程）"></a>Aspect Oriented Programming （面向切面编程）</h2><p>在 Objective-C 的世界里，这句话意思就是利用 Runtime 特性给指定的方法添加自定义代码。有很多方式可以实现 AOP ，Method Swizzling 就是其中之一。而且幸运的是，目前已经有一些第三方库可以让你不需要了解 Runtime ，就能直接开始使用 AOP 。<br>Aspects 就是一个不错的 AOP 库，封装了 Runtime ， Method Swizzling 这些黑色技巧，只提供两个简单的API：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark - Public Aspects API</span></div><div class="line"></div><div class="line">+ (<span class="keyword">id</span>&lt;AspectToken&gt;)aspect_hookSelector:(SEL)selector</div><div class="line">                      withOptions:(AspectOptions)options</div><div class="line">                       usingBlock:(<span class="keyword">id</span>)block</div><div class="line">                            error:(<span class="built_in">NSError</span> **)error &#123;</div><div class="line">    <span class="keyword">return</span> aspect_add((<span class="keyword">id</span>)<span class="keyword">self</span>, selector, options, block, error);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// @return A token which allows to later deregister the aspect.</span></div><div class="line">- (<span class="keyword">id</span>&lt;AspectToken&gt;)aspect_hookSelector:(SEL)selector</div><div class="line">                      withOptions:(AspectOptions)options</div><div class="line">                       usingBlock:(<span class="keyword">id</span>)block</div><div class="line">                            error:(<span class="built_in">NSError</span> **)error &#123;</div><div class="line">    <span class="keyword">return</span> aspect_add(<span class="keyword">self</span>, selector, options, block, error);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用 Aspects 提供的 API，我们之前的例子会进化成这个样子：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> aspect_hookSelector:<span class="keyword">@selector</span>(viewDidLoad) withOptions:AspectPositionBefore usingBlock:^(<span class="keyword">id</span>&lt;AspectInfo&gt; aspectInfo)&#123;</div><div class="line">   <span class="built_in">NSString</span> *className = <span class="built_in">NSStringFromClass</span>([[aspectInfo instance] <span class="keyword">class</span>]);</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@""</span>);</div><div class="line">   [[aspectInfo instance] wxdViewDidLoad];</div><div class="line">&#125; error:<span class="literal">NULL</span>];</div></pre></td></tr></table></figure>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/wxd19891212/WXD_Runtime_DEMO" target="_blank" rel="external">Demo</a><br>利用 objective-C Runtime 特性和 Aspect Oriented Programming ，我们可以把琐碎事务的逻辑从主逻辑中分离出来，作为单独的模块。它是对面向对象编程模式的一个补充。</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Runtime/">Runtime</a> <a class="tag tag--primary tag--small t-link" href="/tags/运行时/">运行时</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/10/10/61606/" data-tooltip="用Runtime简单模拟实现KVO（附Demo）" aria-label="上一篇: 用Runtime简单模拟实现KVO（附Demo）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/05/34074/" data-tooltip="评论系统跟换为Gitment" aria-label="下一篇: 评论系统跟换为Gitment">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/09/14/522/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/09/14/522/&amp;title=iOS Runtime 学习总结（附Demo）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/09/14/522/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 XiaoDong Wang. All Rights Reserved. | Hosted by <a href="https://pages.coding.me" target="_blank" style="color: #9eabb3">Coding Pages</a>
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/10/10/61606/" data-tooltip="用Runtime简单模拟实现KVO（附Demo）" aria-label="上一篇: 用Runtime简单模拟实现KVO（附Demo）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/05/34074/" data-tooltip="评论系统跟换为Gitment" aria-label="下一篇: 评论系统跟换为Gitment">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/09/14/522/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/09/14/522/&amp;title=iOS Runtime 学习总结（附Demo）" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/09/14/522/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目录">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://blog.xiaodongwang.com/2017/09/14/522/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.xiaodongwang.com/2017/09/14/522/&amp;title=iOS Runtime 学习总结（附Demo）">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://blog.xiaodongwang.com/2017/09/14/522/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/WechatIMG72.jpeg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">XiaoDong Wang</h4>
+        
+            <div id="about-card-bio"><p>If you are still looking for that one person who will change your life ，take a look in the mirror</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer, iOS</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-close"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search"
+                    class="form-control input--large search-input" placeholder="Search "
+                    />
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">没有找到文章</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/19497/">
+                            <h3 class="media-heading">iOS - 关于数据持久化</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/09/15288/">
+                            <h3 class="media-heading">iOS当中的Cache设计</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月9日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/11/39562/">
+                            <h3 class="media-heading">内存管理</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月11日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>应用程序内存管理是在程序运行时分配内存的过程，使用它，并在完成后释放内存。一个写得好的程序尽可能少地使用内存。在Objective-C中，它也可以被看作是将有限的内存资源的所有权分配给许多数据和代码的一种方式。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/12/13545/">
+                            <h3 class="media-heading">iOS异常</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月12日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>本文档讨论如何提升和处理异常：中断程序执行正常流程的特殊情况。iOS和OS X上提供了Objective-C指令和Foundation API异常。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2015/04/13/35096/">
+                            <h3 class="media-heading">iOS并发编程指南</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2015年4月13日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>并发性是多个事物同时发生的概念。随着多核CPU的普及，以及每个处理器内核数量只会增加的认识，软件开发人员需要新的方法来利用它们。尽管OS X和iOS等操作系统能够并行运行多个程序，但大多数程序都是在后台运行并执行几乎不需要连续处理时间的任务。</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/01/21/61733/">
+                            <h3 class="media-heading">学习笔记内容迁移</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年1月21日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>为方便学习笔记的整理，今后本人的学习笔记会在个人网站——<a href="http://blog.xiaodongwang.com/">王晓东的个人博客</a>进行更新，感谢大家的支持。由于能力有限，可能会存在一些问题，欢迎大家批评指正。<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/02/12068/">
+                            <h3 class="media-heading">MarkDown基本用法和标签插件示例</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月2日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>MarkDown基础用法及其代码<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <img class="media-image" src="//d1u9biwaxjngwg.cloudfront.net/image-gallery-showcase/city-140.jpg" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/03/15/29740/">
+                            <h3 class="media-heading">代码高亮</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年3月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>对常用的语言增加了高亮处理，下面是一些高亮的代码Demo<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2367-1.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/15/25939/">
+                            <h3 class="media-heading">云南旅游</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月15日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>说走就走<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <img class="media-image" src="//oxyk7k4jh.bkt.clouddn.com/2017-12-12-IMG_2588.jpg?imageView/3/w/200/h/200" width="90" height="90"/>
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="http://blog.xiaodongwang.com/2016/04/20/56707/">
+                            <h3 class="media-heading">乃心</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    2016年4月20日
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><p>人生中最美好的就是和你爱着的人，一起看过的风景，还有一路留下的记忆.<br></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium"
+                data-message-zero="没有找到文章"
+                data-message-one="找到 1 篇文章"
+                data-message-other="找到 {n} 篇文章">
+                找到 29 篇文章
+            </p>
+        </div>
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-qntsxbjpc0rzur0iyh2ouu1eqzikhak7ouydyddbftzlkn70rn9t8s15aukv.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://blog.xiaodongwang.com/2017/09/14/522/',
+                        owner: 'wxd19891212',
+                        repo: 'wxd19891212.github.io',
+                        oauth: {
+                            client_id: '7e5fbba2de6f10d9d7c5',
+                            client_secret: 'e73a2d8bafdf647b1aaf69756465ecb201a33c5c',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('SY89XTQU4C', '4e0dcf7681d496382f94724a1b79b88d');
+        var algoliaIndex = algoliaClient.initIndex('wxdblog');
+    </script>
+
+
+    </body>
+</html>
